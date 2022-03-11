@@ -16,7 +16,7 @@ public class Functions {
     /**
      * sql count() function
      * like:
-     *  Functions.count(column) => count(column)
+     *  Functions.count(column) to count(column)
      * @param column column name
      * @return
      */
@@ -27,7 +27,7 @@ public class Functions {
     /**
      * sql sum() function
      * like:
-     *  Functions.sum(column1) => sum(column1)
+     *  Functions.sum(column1) to sum(column1)
      * @param column column name
      */
     public static String sum(String column) {
@@ -37,7 +37,7 @@ public class Functions {
     /**
      * sql sum() function
      * like:
-     *  Functions.sum("column1 * 30") => sum(column1)
+     *  Functions.sum("column1 * 30") to sum(column1)
      * @param params params
      */
     public static String sum(Object ...params) {
@@ -47,7 +47,7 @@ public class Functions {
     /**
      * sql concat() function
      * like:
-     *  Functions.concat("(", Column.as("column1"), ")") => concat("(", column1, ")")
+     *  Functions.concat("(", Column.as("column1"), ")") to concat("(", column1, ")")
      * @param params params
      */
     public static String concat(Object ...params) {
