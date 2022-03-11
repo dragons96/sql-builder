@@ -197,7 +197,7 @@ public class Test {
 ```
 
 
-##### 2022-03-09 增强查询对象, 支持动态字段支持, 示例见[example/SimpleQuerySql4.java](https://github.com/521274311/sql-builder/blob/master/src/main/java/club/kingon/sql/builder/example/SimpleQuerySql4.java)
+##### 2022-03-09 增强查询对象, 支持动态字段支持, 示例见[example/SimpleQuerySql4.java](https://github.com/dragons96/sql-builder/blob/master/src/main/java/club/kingon/sql/builder/example/SimpleQuerySql4.java)
 
 ##### 2022-01-20 新增预编译SQL支持
 ```java
@@ -542,4 +542,4 @@ public class GoodsService {
 
 
 
-### 内部集成已迁移至SqlBuilderSpringBoot项目: https://gitee.com/kingons/sql-builder-spring-boot
+### 内部集成已迁移至SqlBuilderSpringBoot项目: https://github.com/dragons96/sql-builder-spring-boot
