@@ -383,18 +383,18 @@ public class Test {
         GlobalConfig.OPEN_LAMBDA_TABLE_NAME_MODE = true;
         // select users.name from users where users.id > 1 
         System.out.println(
-            SqlBuilder.select((LMDFunction<User, ?>) User::getUsername)
+            SqlBuilder.select(User::getUsername)
                 .from(User.class)
-                .whereGt((LMDFunction<User, ?>) User::getId, 1)
+                .whereGt(User::getId, 1)
                 .build()
         );
         // 开启SQL严格模式
         GlobalConfig.OPEN_STRICT_MODE = true;
         // select `users`.`name` from `users` where `users`.`id` > 1
         System.out.println(
-            SqlBuilder.select((LMDFunction<User, ?>) User::getUsername)
+            SqlBuilder.select(User::getUsername)
                 .from(User.class)
-                .whereGt((LMDFunction<User, ?>) User::getId, 1)
+                .whereGt(User::getId, 1)
                 .build()
         );
     }
@@ -432,11 +432,8 @@ public class Test {
         System.out.println(
             SqlBuilder.selectAll()
                 .from(User.class)
-                // lambda表达式需添加强转类型, 否则无法识别 ? 具体类型导致编译无法通过
-                .whereLike((LMDFunction<User, ?>) User::getUsername, "dragons")
-                .andGe((LMDFunction<User, ?>) User::getId, 3)
-                // mybatis-plus 集成可直接使用mybatis-plus的SFunction接口
-//                .andGe((SFunction<User, ?>) User::getId, 3)
+                .whereLike(User::getUsername, "dragons")
+                .andGe(User::getId, 3)
                 .build()
         );
     }

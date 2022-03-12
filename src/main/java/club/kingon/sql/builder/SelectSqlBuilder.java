@@ -39,6 +39,13 @@ public class SelectSqlBuilder implements SqlBuilder, FromSqlBuilderRoute, OrderS
         addColumn(columns);
     }
 
+    protected <P>SelectSqlBuilder(String prefix, Object[] precompileArgs, LMDFunction<P, ?>... lambdaFunctions) {
+        this.prefix = prefix;
+        this.precompileArgs = precompileArgs;
+        this.columns = new ArrayList<>(lambdaFunctions.length);
+        addColumn(lambdaFunctions);
+    }
+
     protected SelectSqlBuilder(String prefix, Object[] precompileArgs, Object ...columns) {
         this.prefix = prefix;
         this.precompileArgs = precompileArgs;
@@ -66,6 +73,11 @@ public class SelectSqlBuilder implements SqlBuilder, FromSqlBuilderRoute, OrderS
 
     public SelectSqlBuilder addColumn(Alias ...columns) {
         this.columns.addAll(Arrays.stream(columns).map(SqlNameUtils::handleName).collect(Collectors.toList()));
+        return this;
+    }
+
+    public <P>SelectSqlBuilder addColumn(LMDFunction<P, ?>... lambdaFunctions) {
+        this.columns.addAll(Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).map(SqlNameUtils::handleName).collect(Collectors.toList()));
         return this;
     }
 

@@ -58,6 +58,7 @@ public interface SqlBuilder extends PreparedStatementSupport {
         return new SelectSqlBuilder(null, Constants.EMPTY_OBJECT_ARRAY, columns);
     }
 
+    @SafeVarargs
     static <P>SelectSqlBuilder select(LMDFunction<P, ?> ...lambdaFunctions) {
         return new SelectSqlBuilder(null, Constants.EMPTY_OBJECT_ARRAY, lambdaFunctions);
     }
