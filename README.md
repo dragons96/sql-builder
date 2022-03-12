@@ -107,192 +107,6 @@ class Example {
 }
 ```
 
-##### 2022-03-11 支持sql严格模式及Lambda字段组合表名查询(联表场景)
-
-```java
-import club.kingon.sql.builder.LMDFunction;
-import club.kingon.sql.builder.SqlBuilder;
-import club.kingon.sql.builder.config.GlobalConfig;
-
-@Table("users")
-class User {
-    @Column("name")
-    private String username;
-
-    private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-}
-
-public class Test {
-    public static void main(String[] args) {
-        // 开启Lambda表名字段查询模式
-        GlobalConfig.OPEN_LAMBDA_TABLE_NAME_MODE = true;
-        // select users.name from users where users.id > 1 
-        System.out.println(
-            SqlBuilder.select((LMDFunction<User, ?>) User::getUsername)
-                .from(User.class)
-                .whereGt((LMDFunction<User, ?>) User::getId, 1)
-                .build()
-        );
-        // 开启SQL严格模式
-        GlobalConfig.OPEN_STRICT_MODE = true;
-        // select `users`.`name` from `users` where `users`.`id` > 1
-        System.out.println(
-            SqlBuilder.select((LMDFunction<User, ?>) User::getUsername)
-                .from(User.class)
-                .whereGt((LMDFunction<User, ?>) User::getId, 1)
-                .build()
-        );
-    }
-}
-```
-
-##### 2022-03-10 支持Lambda表达式条件查询支持
-
-```java
-import club.kingon.sql.builder.LMDFunction;
-import club.kingon.sql.builder.SqlBuilder;
-import club.kingon.sql.builder.annotation.Column;
-import club.kingon.sql.builder.annotation.Table;
-import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-
-@Table("users")
-class User {
-    @Column("name")
-    private String username;
-
-    private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-}
-
-public class Test {
-    public static void main(String[] args) {
-        // select * from users where name like '%dragons%' and id >= 3
-        System.out.println(
-            SqlBuilder.selectAll()
-                .from(User.class)
-                // lambda表达式需添加强转类型, 否则无法识别 ? 具体类型导致编译无法通过
-                .whereLike((LMDFunction<User, ?>) User::getUsername, "dragons")
-                .andGe((LMDFunction<User, ?>) User::getId, 3)
-                // mybatis-plus 集成可直接使用mybatis-plus的SFunction接口
-//                .andGe((SFunction<User, ?>) User::getId, 3)
-                .build()
-        );
-    }
-}
-```
-
-
-##### 2022-03-09 增强查询对象, 支持动态字段支持, 示例见[example/SimpleQuerySql4.java](https://github.com/dragons96/sql-builder/blob/master/src/main/java/club/kingon/sql/builder/example/SimpleQuerySql4.java)
-
-##### 2022-01-20 新增预编译SQL支持
-```java
-class Example {
-    public static void main(String[] args) {
-        SQLBuilder builder = SQLBuilder
-            .select("t1.*", "t2.*")
-            .from("t1")
-            .join("t2")
-            .on("t1.a = t2.a")
-            .where("t1.b", Operator.GE, 10)
-            .or("t2.b", Operator.LE, 5)
-            .or(Conditions.where("t1.c", Operator.IN, 3, 4, 5).and("t2.c", Operator.BETWEEN_AND, 5, 10))
-            .and("t1.b", Operator.LRLIKE, 1)
-            .groupBy("t1.z")
-            .having("count(1)", Operator.GE, 100)
-            .orderBy("t1.z", Order.ASC)
-            .limit(10, 100);
-        // 获取完整SQL 
-        // SELECT t1.*, t2.* FROM t1 JOIN t2 ON t1.a = t2.a WHERE (t1.b >= 10 OR t2.b <= 5 OR (t1.c IN (3, 4, 5) AND t2.c BETWEEN 5 AND 10)) AND t1.b LIKE '%1%' GROUP BY t1.z HAVING count(1) >= 100 ORDER BY t1.z ASC LIMIT 10, 100
-        System.out.println(builder.build());
-        // 获取预编译SQL
-        // SELECT t1.*, t2.* FROM t1 JOIN t2 ON t1.a = t2.a WHERE (t1.b >= ? OR t2.b <= ? OR (t1.c IN (?, ?, ?) AND t2.c BETWEEN ? AND ?)) AND t1.b LIKE ? GROUP BY t1.z HAVING count(1) >= ? ORDER BY t1.z ASC LIMIT ?, ?
-        System.out.println(builder.precompileSql());
-        // 获取预编译SQL参数
-        // [10, 5, 3, 4, 5, 5, 10, %1%, 100, 10, 100]
-        System.out.println(Arrays.toString(builder.precompileArgs()));
-    }
-}
-```
-
-##### 2021-12-09 新增Model支持
-
-```java
-
-import club.kingon.sql.builder.SqlBuilder;
-import club.kingon.sql.builder.annotation.Column;
-import club.kingon.sql.builder.annotation.Primary;
-import club.kingon.sql.builder.annotation.Query;
-import club.kingon.sql.builder.enums.Operator;
-
-import java.util.Arrays;
-
-class Example {
-    public static void main(String[] args) {
-        System.out.println(
-            // SqlBuilder.model(Class) => SqlBuilder.select(...).from(...)
-            // 查询商品表中价格大于等于10，且状态为1,2,3的商品名称带有手机的商品
-            // select id, goods_name, status from goods_tb where price >= 10 and goods_name like '%手机%' and status in (1, 2, 3)
-            SqlBuilder.model(Goods.class)
-                .where("price >= 10")
-                .and(new GoodsCriteria(null, "手机", Arrays.asList(1, 2, 3)))
-                .build()
-        );
-    }
-}
-
-@Table("goods_tb")
-class Goods {
-    @Primary
-    @Column("goods_id")
-    private Integer id;
-    /**
-     * 默认映射 goods_name
-     */
-    private String goodsName;
-
-    private Integer status;
-}
-
-class GoodsCriteria {
-    /**
-     * goods_id 精确查询
-     */
-    @Query(value = "goods_id", type = Operator.EQ)
-    private Integer goodsIdEq;
-    /**
-     * goods_name 模糊查询
-     */
-    @Query(value = "goods_name", type = Operator.LRLIKE)
-    private String goodsNameLRLike;
-    /**
-     * in 查询
-     */
-    @Query(value = "status", type = Operator.IN)
-    private List<Integer> statusIn;
-
-    public GoodsCriteria(Integer goodsIdEq, String goodsNameLRLike, List<Integer> statusIn) {
-        this.goodsIdEq = goodsIdEq;
-        this.goodsNameLRLike = goodsNameLRLike;
-        this.statusIn = statusIn;
-    }
-}
-```
-
 ##### 构建 DML SQL
 
 ```java
@@ -540,6 +354,191 @@ public class GoodsService {
 }
 ```
 
+##### 2022-03-11 支持sql严格模式及Lambda字段组合表名查询(联表场景)
+
+```java
+import club.kingon.sql.builder.LMDFunction;
+import club.kingon.sql.builder.SqlBuilder;
+import club.kingon.sql.builder.config.GlobalConfig;
+
+@Table("users")
+class User {
+    @Column("name")
+    private String username;
+
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        // 开启Lambda表名字段查询模式
+        GlobalConfig.OPEN_LAMBDA_TABLE_NAME_MODE = true;
+        // select users.name from users where users.id > 1 
+        System.out.println(
+            SqlBuilder.select((LMDFunction<User, ?>) User::getUsername)
+                .from(User.class)
+                .whereGt((LMDFunction<User, ?>) User::getId, 1)
+                .build()
+        );
+        // 开启SQL严格模式
+        GlobalConfig.OPEN_STRICT_MODE = true;
+        // select `users`.`name` from `users` where `users`.`id` > 1
+        System.out.println(
+            SqlBuilder.select((LMDFunction<User, ?>) User::getUsername)
+                .from(User.class)
+                .whereGt((LMDFunction<User, ?>) User::getId, 1)
+                .build()
+        );
+    }
+}
+```
+
+##### 2022-03-10 支持Lambda表达式条件查询支持
+
+```java
+import club.kingon.sql.builder.LMDFunction;
+import club.kingon.sql.builder.SqlBuilder;
+import club.kingon.sql.builder.annotation.Column;
+import club.kingon.sql.builder.annotation.Table;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+
+@Table("users")
+class User {
+    @Column("name")
+    private String username;
+
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        // select * from users where name like '%dragons%' and id >= 3
+        System.out.println(
+            SqlBuilder.selectAll()
+                .from(User.class)
+                // lambda表达式需添加强转类型, 否则无法识别 ? 具体类型导致编译无法通过
+                .whereLike((LMDFunction<User, ?>) User::getUsername, "dragons")
+                .andGe((LMDFunction<User, ?>) User::getId, 3)
+                // mybatis-plus 集成可直接使用mybatis-plus的SFunction接口
+//                .andGe((SFunction<User, ?>) User::getId, 3)
+                .build()
+        );
+    }
+}
+```
+
+
+##### 2022-03-09 增强查询对象, 支持动态字段支持, 示例见[example/SimpleQuerySql4.java](https://github.com/dragons96/sql-builder/blob/master/src/main/java/club/kingon/sql/builder/example/SimpleQuerySql4.java)
+
+##### 2022-01-20 新增预编译SQL支持
+```java
+class Example {
+    public static void main(String[] args) {
+        SQLBuilder builder = SQLBuilder
+            .select("t1.*", "t2.*")
+            .from("t1")
+            .join("t2")
+            .on("t1.a = t2.a")
+            .where("t1.b", Operator.GE, 10)
+            .or("t2.b", Operator.LE, 5)
+            .or(Conditions.where("t1.c", Operator.IN, 3, 4, 5).and("t2.c", Operator.BETWEEN_AND, 5, 10))
+            .and("t1.b", Operator.LRLIKE, 1)
+            .groupBy("t1.z")
+            .having("count(1)", Operator.GE, 100)
+            .orderBy("t1.z", Order.ASC)
+            .limit(10, 100);
+        // 获取完整SQL 
+        // SELECT t1.*, t2.* FROM t1 JOIN t2 ON t1.a = t2.a WHERE (t1.b >= 10 OR t2.b <= 5 OR (t1.c IN (3, 4, 5) AND t2.c BETWEEN 5 AND 10)) AND t1.b LIKE '%1%' GROUP BY t1.z HAVING count(1) >= 100 ORDER BY t1.z ASC LIMIT 10, 100
+        System.out.println(builder.build());
+        // 获取预编译SQL
+        // SELECT t1.*, t2.* FROM t1 JOIN t2 ON t1.a = t2.a WHERE (t1.b >= ? OR t2.b <= ? OR (t1.c IN (?, ?, ?) AND t2.c BETWEEN ? AND ?)) AND t1.b LIKE ? GROUP BY t1.z HAVING count(1) >= ? ORDER BY t1.z ASC LIMIT ?, ?
+        System.out.println(builder.precompileSql());
+        // 获取预编译SQL参数
+        // [10, 5, 3, 4, 5, 5, 10, %1%, 100, 10, 100]
+        System.out.println(Arrays.toString(builder.precompileArgs()));
+    }
+}
+```
+
+##### 2021-12-09 新增Model支持
+
+```java
+
+import club.kingon.sql.builder.SqlBuilder;
+import club.kingon.sql.builder.annotation.Column;
+import club.kingon.sql.builder.annotation.Primary;
+import club.kingon.sql.builder.annotation.Query;
+import club.kingon.sql.builder.enums.Operator;
+
+import java.util.Arrays;
+
+class Example {
+    public static void main(String[] args) {
+        System.out.println(
+            // SqlBuilder.model(Class) => SqlBuilder.select(...).from(...)
+            // 查询商品表中价格大于等于10，且状态为1,2,3的商品名称带有手机的商品
+            // select id, goods_name, status from goods_tb where price >= 10 and goods_name like '%手机%' and status in (1, 2, 3)
+            SqlBuilder.model(Goods.class)
+                .where("price >= 10")
+                .and(new GoodsCriteria(null, "手机", Arrays.asList(1, 2, 3)))
+                .build()
+        );
+    }
+}
+
+@Table("goods_tb")
+class Goods {
+    @Primary
+    @Column("goods_id")
+    private Integer id;
+    /**
+     * 默认映射 goods_name
+     */
+    private String goodsName;
+
+    private Integer status;
+}
+
+class GoodsCriteria {
+    /**
+     * goods_id 精确查询
+     */
+    @Query(value = "goods_id", type = Operator.EQ)
+    private Integer goodsIdEq;
+    /**
+     * goods_name 模糊查询
+     */
+    @Query(value = "goods_name", type = Operator.LRLIKE)
+    private String goodsNameLRLike;
+    /**
+     * in 查询
+     */
+    @Query(value = "status", type = Operator.IN)
+    private List<Integer> statusIn;
+
+    public GoodsCriteria(Integer goodsIdEq, String goodsNameLRLike, List<Integer> statusIn) {
+        this.goodsIdEq = goodsIdEq;
+        this.goodsNameLRLike = goodsNameLRLike;
+        this.statusIn = statusIn;
+    }
+}
+```
 
 
 ### 内部集成已迁移至SqlBuilderSpringBoot项目: https://github.com/dragons96/sql-builder-spring-boot
