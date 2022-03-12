@@ -43,7 +43,10 @@ public class ConditionUtils {
                     precompileArgs = ((SqlBuilder) vs.get(i)).precompileArgs();
                     // nested queries should exit directly.
                     break;
-                } else {
+                } else if (vs.get(i) instanceof Column) {
+                    precompileTemplateBuilder.append(((Column)vs.get(i)).getName());
+                }
+                else {
                     precompileTemplateBuilder.append("?");
                 }
             }
@@ -73,6 +76,9 @@ public class ConditionUtils {
         }
         if (value[0] instanceof SqlBuilder) {
             return Tuple2.of(column + " " + option.getOptions().get(0) + " (" + ((SqlBuilder) value[0]).precompileSql() + ")", ((SqlBuilder) value[0]).precompileArgs());
+        }
+        if (value[0] instanceof Column) {
+            return Tuple2.of(column + " " + option.getOptions().get(0) + " " + ((Column)value[0]).getName(), Constants.EMPTY_OBJECT_ARRAY);
         }
         return Tuple2.of(column + " " + option.getOptions().get(0) + " ?", new Object[]{value[0]});
     }
