@@ -2,6 +2,7 @@ package club.kingon.sql.builder;
 
 import club.kingon.sql.builder.entry.Constants;
 import club.kingon.sql.builder.enums.InsertMode;
+import club.kingon.sql.builder.util.LambdaUtils;
 import club.kingon.sql.builder.util.SqlNameUtils;
 
 import java.util.Arrays;
@@ -26,8 +27,19 @@ public class InsertSqlBuilder implements SqlBuilder, ValueSqlBuilderRoute, Value
         this.columns = Arrays.stream(columns).map(SqlNameUtils::handleName).collect(Collectors.toList());
     }
 
+    protected InsertSqlBuilder(String table, InsertMode mode, LMDFunction<?, ?>... lambdaFunctions) {
+        this.table = SqlNameUtils.handleName(table);
+        this.mode = mode;
+        this.columns = Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).map(SqlNameUtils::handleName).collect(Collectors.toList());
+    }
+
     public InsertSqlBuilder addColumn(String ...columns) {
         this.columns.addAll(Arrays.stream(columns).map(SqlNameUtils::handleName).collect(Collectors.toList()));
+        return this;
+    }
+
+    public <P>InsertSqlBuilder addColumn(LMDFunction<P, ?>... lambdaFunctions) {
+        this.columns.addAll(Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).map(SqlNameUtils::handleName).collect(Collectors.toList()));
         return this;
     }
 

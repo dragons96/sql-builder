@@ -6,7 +6,6 @@ import club.kingon.sql.builder.util.ConditionUtils;
 import club.kingon.sql.builder.util.LambdaUtils;
 import club.kingon.sql.builder.util.SqlNameUtils;
 
-import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
@@ -76,18 +75,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder where(F lambdaFunction, Operator option, Object ...values) {
+    default <P>WhereSqlBuilder where(LMDFunction<P, ?> lambdaFunction, Operator option, Object ...values) {
         return where(LambdaUtils.getColumnName(lambdaFunction), option, values);
     }
 
-    default <F extends Serializable>WhereSqlBuilder where(Boolean predicate, F lambdaFunction, Operator option, Object ...values) {
+    default <P>WhereSqlBuilder where(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Object ...values) {
         if (Boolean.TRUE.equals(predicate)) {
             return where(LambdaUtils.getColumnName(lambdaFunction), option, values);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder where(Boolean predicate, F lambdaFunction, Operator option, Supplier<Object[]> values) {
+    default <P>WhereSqlBuilder where(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Supplier<Object[]> values) {
         if (Boolean.TRUE.equals(predicate)) {
             return where(LambdaUtils.getColumnName(lambdaFunction), option, values.get());
         }
@@ -115,18 +114,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereEq(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereEq(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereEq(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereEq(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereEq(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereEq(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereEq(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -155,18 +154,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereGt(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereGt(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereGt(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereGt(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereGt(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereGt(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereGt(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -198,18 +197,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
 
 
 
-    default <F extends Serializable>WhereSqlBuilder whereGe(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereGe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereGe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereGe(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereGe(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereGe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereGe(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -239,18 +238,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereLt(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereLt(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereLt(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereLt(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLt(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereLt(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLt(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -280,18 +279,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereLe(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereLe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereLe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereLe(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLe(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereLe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLe(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -321,18 +320,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereNe(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereNe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereNe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNe(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNe(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNe(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -362,18 +361,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereNe2(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereNe2(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereNe2(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNe2(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNe2(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNe2(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNe2(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -434,18 +433,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereLike(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -507,18 +506,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereNotLike(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereNotLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereNotLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -548,18 +547,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereLLike(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereLLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereLLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereLLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereLLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -588,18 +587,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereNotLLike(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereNotLLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereNotLLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotLLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotLLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotLLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotLLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -628,18 +627,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereRLike(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereRLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereRLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereRLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereRLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereRLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereRLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -667,18 +666,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotRLike(F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereNotRLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return whereNotRLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotRLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>WhereSqlBuilder whereNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotRLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotRLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>WhereSqlBuilder whereNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotRLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -707,18 +706,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereIn(F lambdaFunction, Object... values) {
+    default <P>WhereSqlBuilder whereIn(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return whereIn(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereIn(Boolean predicate, F lambdaFunction, Object... value) {
+    default <P>WhereSqlBuilder whereIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereIn(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>WhereSqlBuilder whereIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereIn(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -748,18 +747,18 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereNotIn(F lambdaFunction, Object... values) {
+    default <P>WhereSqlBuilder whereNotIn(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return whereNotIn(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotIn(Boolean predicate, F lambdaFunction, Object... value) {
+    default <P>WhereSqlBuilder whereNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotIn(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>WhereSqlBuilder whereNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotIn(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -796,25 +795,25 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereBetween(F lambdaFunction, Object... values) {
+    default <P>WhereSqlBuilder whereBetween(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return whereBetween(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereBetween(Boolean predicate, F lambdaFunction, Object... values) {
+    default <P>WhereSqlBuilder whereBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereBetween(LambdaUtils.getColumnName(lambdaFunction), values);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereBetween(Boolean predicate, F lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
+    default <P>WhereSqlBuilder whereBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereBetween(LambdaUtils.getColumnName(lambdaFunction), value1.get(), value2.get());
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>WhereSqlBuilder whereBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereBetween(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -851,25 +850,25 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>WhereSqlBuilder whereNotBetween(F lambdaFunction, Object... values) {
+    default <P>WhereSqlBuilder whereNotBetween(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return whereNotBetween(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotBetween(Boolean predicate, F lambdaFunction, Object... values) {
+    default <P>WhereSqlBuilder whereNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotBetween(LambdaUtils.getColumnName(lambdaFunction), values);
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
+    default <P>WhereSqlBuilder whereNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotBetween(LambdaUtils.getColumnName(lambdaFunction), value1.get(), value2.get());
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>WhereSqlBuilder whereNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotBetween(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -882,11 +881,11 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
         return where(Boolean.TRUE, column, Operator.IS_NULL);
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereIsNull(F lambdaFunction) {
+    default <P>WhereSqlBuilder whereIsNull(LMDFunction<P, ?> lambdaFunction) {
         return whereIsNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereIsNull(Boolean predicate, F lambdaFunction) {
+    default <P>WhereSqlBuilder whereIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereIsNull(LambdaUtils.getColumnName(lambdaFunction));
         }
@@ -912,11 +911,11 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <S extends Serializable>WhereSqlBuilder whereNotNull(S lambdaFunction) {
+    default <P>WhereSqlBuilder whereNotNull(LMDFunction<P, ?> lambdaFunction) {
         return whereNotNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    default <F extends Serializable>WhereSqlBuilder whereNotNull(Boolean predicate, F lambdaFunction) {
+    default <P>WhereSqlBuilder whereNotNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotNull(LambdaUtils.getColumnName(lambdaFunction));
         }

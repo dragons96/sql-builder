@@ -6,7 +6,6 @@ import club.kingon.sql.builder.util.ConditionUtils;
 import club.kingon.sql.builder.util.LambdaUtils;
 import club.kingon.sql.builder.util.SqlNameUtils;
 
-import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
@@ -76,18 +75,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder having(F lambdaFunction, Operator option, Object ...values) {
+    default <P>HavingSqlBuilder having(LMDFunction<P, ?> lambdaFunction, Operator option, Object ...values) {
         return having(LambdaUtils.getColumnName(lambdaFunction), option, values);
     }
 
-    default <F extends Serializable>HavingSqlBuilder having(Boolean predicate, F lambdaFunction, Operator option, Object ...values) {
+    default <P>HavingSqlBuilder having(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Object ...values) {
         if (Boolean.TRUE.equals(predicate)) {
             return having(LambdaUtils.getColumnName(lambdaFunction), option, values);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder having(Boolean predicate, F lambdaFunction, Operator option, Supplier<Object[]> values) {
+    default <P>HavingSqlBuilder having(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Supplier<Object[]> values) {
         if (Boolean.TRUE.equals(predicate)) {
             return having(LambdaUtils.getColumnName(lambdaFunction), option, values.get());
         }
@@ -115,18 +114,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingEq(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingEq(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingEq(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingEq(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingEq(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingEq(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingEq(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -155,18 +154,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingGt(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingGt(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingGt(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingGt(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingGt(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingGt(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingGt(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -198,18 +197,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
 
 
 
-    default <F extends Serializable>HavingSqlBuilder havingGe(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingGe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingGe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingGe(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingGe(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingGe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingGe(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -239,18 +238,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingLt(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingLt(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingLt(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingLt(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLt(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingLt(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLt(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -280,18 +279,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingLe(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingLe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingLe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingLe(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLe(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingLe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLe(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -321,18 +320,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingNe(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingNe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingNe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNe(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNe(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNe(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -362,18 +361,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingNe2(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingNe2(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingNe2(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNe2(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNe2(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNe2(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNe2(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -434,18 +433,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingLike(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -507,18 +506,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingNotLike(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingNotLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingNotLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -548,18 +547,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingLLike(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingLLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingLLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingLLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingLLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -588,18 +587,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingNotLLike(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingNotLLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingNotLLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotLLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotLLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotLLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotLLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -628,18 +627,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingRLike(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingRLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingRLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingRLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingRLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingRLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingRLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -667,18 +666,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotRLike(F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingNotRLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return havingNotRLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotRLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>HavingSqlBuilder havingNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotRLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotRLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>HavingSqlBuilder havingNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotRLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -707,18 +706,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingIn(F lambdaFunction, Object... values) {
+    default <P>HavingSqlBuilder havingIn(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return havingIn(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingIn(Boolean predicate, F lambdaFunction, Object... value) {
+    default <P>HavingSqlBuilder havingIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingIn(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>HavingSqlBuilder havingIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingIn(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -748,18 +747,18 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingNotIn(F lambdaFunction, Object... values) {
+    default <P>HavingSqlBuilder havingNotIn(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return havingNotIn(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotIn(Boolean predicate, F lambdaFunction, Object... value) {
+    default <P>HavingSqlBuilder havingNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotIn(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>HavingSqlBuilder havingNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotIn(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -796,25 +795,25 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingBetween(F lambdaFunction, Object... values) {
+    default <P>HavingSqlBuilder havingBetween(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return havingBetween(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingBetween(Boolean predicate, F lambdaFunction, Object... values) {
+    default <P>HavingSqlBuilder havingBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingBetween(LambdaUtils.getColumnName(lambdaFunction), values);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingBetween(Boolean predicate, F lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
+    default <P>HavingSqlBuilder havingBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingBetween(LambdaUtils.getColumnName(lambdaFunction), value1.get(), value2.get());
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>HavingSqlBuilder havingBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingBetween(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -851,25 +850,25 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>HavingSqlBuilder havingNotBetween(F lambdaFunction, Object... values) {
+    default <P>HavingSqlBuilder havingNotBetween(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return havingNotBetween(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotBetween(Boolean predicate, F lambdaFunction, Object... values) {
+    default <P>HavingSqlBuilder havingNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotBetween(LambdaUtils.getColumnName(lambdaFunction), values);
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
+    default <P>HavingSqlBuilder havingNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotBetween(LambdaUtils.getColumnName(lambdaFunction), value1.get(), value2.get());
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>HavingSqlBuilder havingNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotBetween(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -882,11 +881,11 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
         return having(Boolean.TRUE, column, Operator.IS_NULL);
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingIsNull(F lambdaFunction) {
+    default <P>HavingSqlBuilder havingIsNull(LMDFunction<P, ?> lambdaFunction) {
         return havingIsNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingIsNull(Boolean predicate, F lambdaFunction) {
+    default <P>HavingSqlBuilder havingIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingIsNull(LambdaUtils.getColumnName(lambdaFunction));
         }
@@ -912,11 +911,11 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <S extends Serializable>HavingSqlBuilder havingNotNull(S lambdaFunction) {
+    default <P>HavingSqlBuilder havingNotNull(LMDFunction<P, ?> lambdaFunction) {
         return havingNotNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    default <F extends Serializable>HavingSqlBuilder havingNotNull(Boolean predicate, F lambdaFunction) {
+    default <P>HavingSqlBuilder havingNotNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotNull(LambdaUtils.getColumnName(lambdaFunction));
         }

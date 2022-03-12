@@ -17,6 +17,11 @@ public interface SetSqlBuilderRoute extends SqlBuilder {
         return new SetSqlBuilder(precompileSql(), precompileArgs(), column, value);
     }
 
+    default <P>SetSqlBuilder set(LMDFunction<P, ?> lambdaFunction, Object value) {
+        return new SetSqlBuilder(precompileSql(), precompileArgs(), lambdaFunction, value);
+    }
+
+    @Deprecated
     default SetSqlBuilder setColumn(String column1, String column2) {
         return new SetSqlBuilder(precompileSql(), precompileArgs(), ConditionUtils.parseConditionColumn(column1, Operator.EQ, column2));
     }

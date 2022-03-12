@@ -6,7 +6,6 @@ import club.kingon.sql.builder.util.ConditionUtils;
 import club.kingon.sql.builder.util.LambdaUtils;
 import club.kingon.sql.builder.util.SqlNameUtils;
 
-import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
@@ -62,18 +61,18 @@ public class Conditions {
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder where(F lambdaFunction, Operator option, Object ...params) {
+    public static <P>WhereSqlBuilder where(LMDFunction<P, ?> lambdaFunction, Operator option, Object ...params) {
         return where(LambdaUtils.getColumnName(lambdaFunction), option, params);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder where(Boolean predicate, F lambdaFunction, Operator option, Object ...params) {
+    public static <P>WhereSqlBuilder where(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Object ...params) {
         if (Boolean.TRUE.equals(predicate)) {
             return where(LambdaUtils.getColumnName(lambdaFunction), option, params);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder where(Boolean predicate, F lambdaFunction, Operator option, Supplier<Object[]> params) {
+    public static <P>WhereSqlBuilder where(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return where(LambdaUtils.getColumnName(lambdaFunction), option, params.get());
         }
@@ -101,18 +100,18 @@ public class Conditions {
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereEq(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereEq(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereEq(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereEq(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereEq(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereEq(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereEq(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -143,18 +142,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereNe(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereNe(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereNe(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNe(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNe(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNe(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNe(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -183,18 +182,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereNe2(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereNe2(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereNe2(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNe2(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNe2(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNe2(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNe2(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -225,18 +224,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereGt(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereGt(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereGt(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereGt(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereGt(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereGt(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereGt(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -267,18 +266,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereGe(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereGe(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereGe(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereGe(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereGe(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereGe(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereGe(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -308,18 +307,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereLt(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereLt(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereLt(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereLt(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLt(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereLt(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLt(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -348,18 +347,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereLe(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereLe(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereLe(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereLe(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLe(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereLe(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLe(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -388,18 +387,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereLike(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -429,18 +428,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotLike(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereNotLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereNotLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -469,18 +468,18 @@ public class Conditions {
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereLLike(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereLLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereLLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereLLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereLLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereLLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -509,18 +508,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotLLike(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereNotLLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereNotLLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotLLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotLLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotLLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotLLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -550,18 +549,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereRLike(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereRLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereRLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereRLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereRLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereRLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereRLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -590,18 +589,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotRLike(F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereNotRLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return whereNotRLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotRLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>WhereSqlBuilder whereNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotRLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotRLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>WhereSqlBuilder whereNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotRLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -631,18 +630,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereIn(F lambdaFunction, Object... params) {
+    public static <P>WhereSqlBuilder whereIn(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return whereIn(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereIn(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>WhereSqlBuilder whereIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereIn(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>WhereSqlBuilder whereIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereIn(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -673,18 +672,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotIn(F lambdaFunction, Object... params) {
+    public static <P>WhereSqlBuilder whereNotIn(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return whereNotIn(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotIn(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>WhereSqlBuilder whereNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotIn(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>WhereSqlBuilder whereNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotIn(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -722,25 +721,25 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereBetween(F lambdaFunction, Object... params) {
+    public static <P>WhereSqlBuilder whereBetween(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return whereBetween(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereBetween(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>WhereSqlBuilder whereBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereBetween(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereBetween(Boolean predicate, F lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
+    public static <P>WhereSqlBuilder whereBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereBetween(LambdaUtils.getColumnName(lambdaFunction), param1.get(), param2.get());
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>WhereSqlBuilder whereBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereBetween(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -779,25 +778,25 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotBetween(F lambdaFunction, Object... params) {
+    public static <P>WhereSqlBuilder whereNotBetween(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return whereNotBetween(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotBetween(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>WhereSqlBuilder whereNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotBetween(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
+    public static <P>WhereSqlBuilder whereNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotBetween(LambdaUtils.getColumnName(lambdaFunction), param1.get(), param2.get());
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>WhereSqlBuilder whereNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereNotBetween(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -817,11 +816,11 @@ public class Conditions {
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereIsNull(F lambdaFunction) {
+    public static <P>WhereSqlBuilder whereIsNull(LMDFunction<P, ?> lambdaFunction) {
         return whereIsNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereIsNull(Boolean predicate, F lambdaFunction) {
+    public static <P>WhereSqlBuilder whereIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereIsNull(LambdaUtils.getColumnName(lambdaFunction));
         }
@@ -841,11 +840,11 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>WhereSqlBuilder whereIsNotNull(F lambdaFunction) {
+    public static <P>WhereSqlBuilder whereIsNotNull(LMDFunction<P, ?> lambdaFunction) {
         return whereIsNotNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public static <F extends Serializable>WhereSqlBuilder whereIsNotNull(Boolean predicate, F lambdaFunction) {
+    public static <P>WhereSqlBuilder whereIsNotNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return whereIsNotNull(LambdaUtils.getColumnName(lambdaFunction));
         }
@@ -854,7 +853,7 @@ public class Conditions {
 
 
     public static WhereSqlBuilder whereExists(Object... sqlOrBuilder) {
-        return where(Boolean.TRUE, null, Operator.EXISTS, sqlOrBuilder);
+        return where(Boolean.TRUE, Constants.EMPTY_STRING, Operator.EXISTS, sqlOrBuilder);
     }
 
     public static WhereSqlBuilder whereExists(Boolean predicate, Object... sqlOrBuilder) {
@@ -876,7 +875,7 @@ public class Conditions {
 
 
     public static WhereSqlBuilder whereNotExists(Object... sqlOrBuilder) {
-        return where(Boolean.TRUE, null, Operator.NOT_EXISTS, sqlOrBuilder);
+        return where(Boolean.TRUE, Constants.EMPTY_STRING, Operator.NOT_EXISTS, sqlOrBuilder);
     }
 
     public static WhereSqlBuilder whereNotExists(Boolean predicate, Object... sqlOrBuilder) {
@@ -941,18 +940,18 @@ public class Conditions {
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder on(F lambdaFunction, Operator option, Object ...params) {
+    public static <P>JoinOnSqlBuilder on(LMDFunction<P, ?> lambdaFunction, Operator option, Object ...params) {
         return on(LambdaUtils.getColumnName(lambdaFunction), option, params);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder on(Boolean predicate, F lambdaFunction, Operator option, Object ...params) {
+    public static <P>JoinOnSqlBuilder on(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Object ...params) {
         if (Boolean.TRUE.equals(predicate)) {
             return on(LambdaUtils.getColumnName(lambdaFunction), option, params);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder on(Boolean predicate, F lambdaFunction, Operator option, Supplier<Object[]> params) {
+    public static <P>JoinOnSqlBuilder on(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return on(LambdaUtils.getColumnName(lambdaFunction), option, params.get());
         }
@@ -980,18 +979,18 @@ public class Conditions {
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onEq(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onEq(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onEq(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onEq(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onEq(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onEq(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onEq(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1022,18 +1021,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNe(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onNe(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onNe(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNe(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNe(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNe(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNe(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1062,18 +1061,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNe2(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onNe2(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onNe2(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNe2(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNe2(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNe2(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNe2(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1104,18 +1103,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onGt(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onGt(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onGt(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onGt(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onGt(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onGt(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onGt(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1146,18 +1145,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onGe(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onGe(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onGe(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onGe(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onGe(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onGe(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onGe(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1187,18 +1186,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLt(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onLt(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onLt(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLt(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLt(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLt(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLt(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1227,18 +1226,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLe(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onLe(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onLe(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLe(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLe(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLe(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLe(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1267,18 +1266,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLike(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1308,18 +1307,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotLike(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onNotLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onNotLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1348,18 +1347,18 @@ public class Conditions {
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLLike(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onLLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onLLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onLLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1388,18 +1387,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotLLike(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onNotLLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onNotLLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotLLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotLLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotLLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotLLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1429,18 +1428,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onRLike(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onRLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onRLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onRLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onRLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onRLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onRLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1469,18 +1468,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotRLike(F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onNotRLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return onNotRLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotRLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>JoinOnSqlBuilder onNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotRLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotRLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>JoinOnSqlBuilder onNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotRLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1510,18 +1509,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onIn(F lambdaFunction, Object... params) {
+    public static <P>JoinOnSqlBuilder onIn(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return onIn(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onIn(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>JoinOnSqlBuilder onIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return onIn(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>JoinOnSqlBuilder onIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return onIn(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -1552,18 +1551,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotIn(F lambdaFunction, Object... params) {
+    public static <P>JoinOnSqlBuilder onNotIn(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return onNotIn(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotIn(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>JoinOnSqlBuilder onNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotIn(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>JoinOnSqlBuilder onNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotIn(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -1601,25 +1600,25 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onBetween(F lambdaFunction, Object... params) {
+    public static <P>JoinOnSqlBuilder onBetween(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return onBetween(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onBetween(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>JoinOnSqlBuilder onBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return onBetween(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onBetween(Boolean predicate, F lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
+    public static <P>JoinOnSqlBuilder onBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
         if (Boolean.TRUE.equals(predicate)) {
             return onBetween(LambdaUtils.getColumnName(lambdaFunction), param1.get(), param2.get());
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>JoinOnSqlBuilder onBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return onBetween(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -1658,25 +1657,25 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotBetween(F lambdaFunction, Object... params) {
+    public static <P>JoinOnSqlBuilder onNotBetween(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return onNotBetween(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotBetween(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>JoinOnSqlBuilder onNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotBetween(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
+    public static <P>JoinOnSqlBuilder onNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotBetween(LambdaUtils.getColumnName(lambdaFunction), param1.get(), param2.get());
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>JoinOnSqlBuilder onNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotBetween(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -1696,11 +1695,11 @@ public class Conditions {
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onIsNull(F lambdaFunction) {
+    public static <P>JoinOnSqlBuilder onIsNull(LMDFunction<P, ?> lambdaFunction) {
         return onIsNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onIsNull(Boolean predicate, F lambdaFunction) {
+    public static <P>JoinOnSqlBuilder onIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return onIsNull(LambdaUtils.getColumnName(lambdaFunction));
         }
@@ -1720,11 +1719,11 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>JoinOnSqlBuilder onIsNotNull(F lambdaFunction) {
+    public static <P>JoinOnSqlBuilder onIsNotNull(LMDFunction<P, ?> lambdaFunction) {
         return onIsNotNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public static <F extends Serializable>JoinOnSqlBuilder onIsNotNull(Boolean predicate, F lambdaFunction) {
+    public static <P>JoinOnSqlBuilder onIsNotNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return onIsNotNull(LambdaUtils.getColumnName(lambdaFunction));
         }
@@ -1733,7 +1732,7 @@ public class Conditions {
 
 
     public static JoinOnSqlBuilder onExists(Object... sqlOrBuilder) {
-        return on(Boolean.TRUE, null, Operator.EXISTS, sqlOrBuilder);
+        return on(Boolean.TRUE, Constants.EMPTY_STRING, Operator.EXISTS, sqlOrBuilder);
     }
 
     public static JoinOnSqlBuilder onExists(Boolean predicate, Object... sqlOrBuilder) {
@@ -1755,7 +1754,7 @@ public class Conditions {
 
 
     public static JoinOnSqlBuilder onNotExists(Object... sqlOrBuilder) {
-        return on(Boolean.TRUE, null, Operator.NOT_EXISTS, sqlOrBuilder);
+        return on(Boolean.TRUE, Constants.EMPTY_STRING, Operator.NOT_EXISTS, sqlOrBuilder);
     }
 
     public static JoinOnSqlBuilder onNotExists(Boolean predicate, Object... sqlOrBuilder) {
@@ -1822,18 +1821,18 @@ public class Conditions {
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder having(F lambdaFunction, Operator option, Object ...params) {
+    public static <P>HavingSqlBuilder having(LMDFunction<P, ?> lambdaFunction, Operator option, Object ...params) {
         return having(LambdaUtils.getColumnName(lambdaFunction), option, params);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder having(Boolean predicate, F lambdaFunction, Operator option, Object ...params) {
+    public static <P>HavingSqlBuilder having(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Object ...params) {
         if (Boolean.TRUE.equals(predicate)) {
             return having(LambdaUtils.getColumnName(lambdaFunction), option, params);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder having(Boolean predicate, F lambdaFunction, Operator option, Supplier<Object[]> params) {
+    public static <P>HavingSqlBuilder having(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return having(LambdaUtils.getColumnName(lambdaFunction), option, params.get());
         }
@@ -1861,18 +1860,18 @@ public class Conditions {
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingEq(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingEq(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingEq(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingEq(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingEq(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingEq(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingEq(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1903,18 +1902,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingNe(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingNe(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingNe(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNe(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNe(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNe(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNe(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1943,18 +1942,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingNe2(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingNe2(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingNe2(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNe2(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNe2(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNe2(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNe2(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -1985,18 +1984,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingGt(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingGt(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingGt(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingGt(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingGt(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingGt(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingGt(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -2027,18 +2026,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingGe(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingGe(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingGe(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingGe(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingGe(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingGe(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingGe(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -2068,18 +2067,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingLt(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingLt(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingLt(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingLt(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLt(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingLt(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLt(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -2108,18 +2107,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingLe(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingLe(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingLe(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingLe(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLe(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingLe(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLe(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -2148,18 +2147,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingLike(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -2189,18 +2188,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotLike(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingNotLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingNotLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -2229,18 +2228,18 @@ public class Conditions {
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingLLike(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingLLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingLLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingLLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingLLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingLLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -2269,18 +2268,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotLLike(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingNotLLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingNotLLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotLLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotLLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotLLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotLLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -2310,18 +2309,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingRLike(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingRLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingRLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingRLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingRLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingRLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingRLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -2350,18 +2349,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotRLike(F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingNotRLike(LMDFunction<P, ?> lambdaFunction, Object param) {
         return havingNotRLike(LambdaUtils.getColumnName(lambdaFunction), param);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotRLike(Boolean predicate, F lambdaFunction, Object param) {
+    public static <P>HavingSqlBuilder havingNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotRLike(LambdaUtils.getColumnName(lambdaFunction), param);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotRLike(Boolean predicate, F lambdaFunction, Supplier<Object> param) {
+    public static <P>HavingSqlBuilder havingNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotRLike(LambdaUtils.getColumnName(lambdaFunction), param.get());
         }
@@ -2391,18 +2390,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingIn(F lambdaFunction, Object... params) {
+    public static <P>HavingSqlBuilder havingIn(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return havingIn(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingIn(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>HavingSqlBuilder havingIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingIn(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>HavingSqlBuilder havingIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingIn(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -2433,18 +2432,18 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotIn(F lambdaFunction, Object... params) {
+    public static <P>HavingSqlBuilder havingNotIn(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return havingNotIn(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotIn(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>HavingSqlBuilder havingNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotIn(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>HavingSqlBuilder havingNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotIn(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -2482,25 +2481,25 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingBetween(F lambdaFunction, Object... params) {
+    public static <P>HavingSqlBuilder havingBetween(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return havingBetween(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingBetween(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>HavingSqlBuilder havingBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingBetween(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingBetween(Boolean predicate, F lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
+    public static <P>HavingSqlBuilder havingBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingBetween(LambdaUtils.getColumnName(lambdaFunction), param1.get(), param2.get());
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>HavingSqlBuilder havingBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingBetween(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -2539,25 +2538,25 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotBetween(F lambdaFunction, Object... params) {
+    public static <P>HavingSqlBuilder havingNotBetween(LMDFunction<P, ?> lambdaFunction, Object... params) {
         return havingNotBetween(LambdaUtils.getColumnName(lambdaFunction), params);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotBetween(Boolean predicate, F lambdaFunction, Object... params) {
+    public static <P>HavingSqlBuilder havingNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... params) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotBetween(LambdaUtils.getColumnName(lambdaFunction), params);
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
+    public static <P>HavingSqlBuilder havingNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> param1, Supplier<Object> param2) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotBetween(LambdaUtils.getColumnName(lambdaFunction), param1.get(), param2.get());
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> params) {
+    public static <P>HavingSqlBuilder havingNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> params) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingNotBetween(LambdaUtils.getColumnName(lambdaFunction), params.get());
         }
@@ -2577,11 +2576,11 @@ public class Conditions {
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingIsNull(F lambdaFunction) {
+    public static <P>HavingSqlBuilder havingIsNull(LMDFunction<P, ?> lambdaFunction) {
         return havingIsNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingIsNull(Boolean predicate, F lambdaFunction) {
+    public static <P>HavingSqlBuilder havingIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingIsNull(LambdaUtils.getColumnName(lambdaFunction));
         }
@@ -2601,11 +2600,11 @@ public class Conditions {
     }
 
 
-    public static <F extends Serializable>HavingSqlBuilder havingIsNotNull(F lambdaFunction) {
+    public static <P>HavingSqlBuilder havingIsNotNull(LMDFunction<P, ?> lambdaFunction) {
         return havingIsNotNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public static <F extends Serializable>HavingSqlBuilder havingIsNotNull(Boolean predicate, F lambdaFunction) {
+    public static <P>HavingSqlBuilder havingIsNotNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return havingIsNotNull(LambdaUtils.getColumnName(lambdaFunction));
         }
@@ -2614,7 +2613,7 @@ public class Conditions {
 
 
     public static HavingSqlBuilder havingExists(Object... sqlOrBuilder) {
-        return having(Boolean.TRUE, null, Operator.EXISTS, sqlOrBuilder);
+        return having(Boolean.TRUE, Constants.EMPTY_STRING, Operator.EXISTS, sqlOrBuilder);
     }
 
     public static HavingSqlBuilder havingExists(Boolean predicate, Object... sqlOrBuilder) {
@@ -2636,7 +2635,7 @@ public class Conditions {
 
 
     public static HavingSqlBuilder havingNotExists(Object... sqlOrBuilder) {
-        return having(Boolean.TRUE, null, Operator.NOT_EXISTS, sqlOrBuilder);
+        return having(Boolean.TRUE, Constants.EMPTY_STRING, Operator.NOT_EXISTS, sqlOrBuilder);
     }
 
     public static HavingSqlBuilder havingNotExists(Boolean predicate, Object... sqlOrBuilder) {

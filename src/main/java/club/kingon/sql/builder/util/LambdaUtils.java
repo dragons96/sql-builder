@@ -1,13 +1,12 @@
 package club.kingon.sql.builder.util;
 
+import club.kingon.sql.builder.LMDFunction;
 import club.kingon.sql.builder.LambdaException;
 import club.kingon.sql.builder.Tuple2;
 import club.kingon.sql.builder.config.GlobalConfig;
 import club.kingon.sql.builder.inner.ObjectMapperUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
 
 /**
  * @author dragons
@@ -17,7 +16,7 @@ public class LambdaUtils {
 
     private final static Logger log = LoggerFactory.getLogger(LambdaUtils.class);
 
-    public static <T extends Serializable>String getColumnName(T lambda) {
+    public static <T extends LMDFunction>String getColumnName(T lambda) {
         Tuple2<String, String> classAndMethod = ObjectMapperUtils.getLambdaImplementClassAndMethodName(lambda);
         String fieldName;
         if (classAndMethod._2.startsWith("is")) {

@@ -16,7 +16,6 @@ import club.kingon.sql.builder.util.SqlNameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -163,7 +162,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T) this;
     }
 
-    public <F extends Serializable>T and(F lambdaFunction, Operator option, Object ...values) {
+    public <P>T and(LMDFunction<P, ?> lambdaFunction, Operator option, Object ...values) {
         return and(LambdaUtils.getColumnName(lambdaFunction), option, values);
     }
 
@@ -186,7 +185,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T)this;
     }
 
-    public <F extends Serializable>T and(Boolean predicate, F lambdaFunction, Operator option, Object ...values) {
+    public <P>T and(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Object ...values) {
         return and(predicate, LambdaUtils.getColumnName(lambdaFunction), option, values);
     }
 
@@ -198,7 +197,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T) this;
     }
 
-    public <F extends Serializable>T and(Boolean predicate, F lambdaFunction, Operator option, Supplier<Object[]> values) {
+    public <P>T and(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Supplier<Object[]> values) {
         return and(predicate, LambdaUtils.getColumnName(lambdaFunction), option, values);
     }
 
@@ -302,7 +301,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return or(pt._1, pt._2);
     }
 
-    public <F extends Serializable>T or(F lambdaFunction, Operator option, Object ...values) {
+    public <P>T or(LMDFunction<P, ?> lambdaFunction, Operator option, Object ...values) {
         return or(LambdaUtils.getColumnName(lambdaFunction), option, values);
     }
 
@@ -334,8 +333,8 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T) this;
     }
 
-    public <F extends Serializable>T or(Boolean predicate, F column, Operator option, Object ...values) {
-        return or(predicate, LambdaUtils.getColumnName(column), option, values);
+    public <P>T or(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Object ...values) {
+        return or(predicate, LambdaUtils.getColumnName(lambdaFunction), option, values);
     }
 
     public T or(Boolean predicate, String column, Operator option, Supplier<Object[]> values) {
@@ -346,8 +345,8 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T) this;
     }
 
-    public <F extends Serializable>T or(Boolean predicate, F column, Operator option, Supplier<Object[]> values) {
-        return or(predicate, LambdaUtils.getColumnName(column), option, values);
+    public <P>T or(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Supplier<Object[]> values) {
+        return or(predicate, LambdaUtils.getColumnName(lambdaFunction), option, values);
     }
 
     public T or(Boolean predicate, String condition, Object ...values) {
@@ -406,7 +405,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T) this;
     }
 
-    public <F extends Serializable>T andEq(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andEq(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -414,7 +413,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(predicate, column, Operator.EQ, value);
     }
 
-    public <F extends Serializable>T andEq(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andEq(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -423,7 +422,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(column, Operator.EQ, value);
     }
 
-    public <S extends Serializable> T andEq(S lambdaFunction, Object value) {
+    public <P> T andEq(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andEq(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -470,7 +469,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T) this;
     }
 
-    public <F extends Serializable>T andGt(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andGt(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -478,7 +477,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(predicate, column, Operator.GT, value);
     }
 
-    public <F extends Serializable>T andGt(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andGt(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -486,7 +485,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(column, Operator.GT, value);
     }
 
-    public <F extends Serializable>T andGt(F lambdaFunction, Object value) {
+    public <P>T andGt(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andGt(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -497,7 +496,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T) this;
     }
 
-    public <F extends Serializable>T andGe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andGe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -505,7 +504,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(predicate, column, Operator.GE, value);
     }
 
-    public <F extends Serializable>T andGe(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andGe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -513,7 +512,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(column, Operator.GE, value);
     }
 
-    public <F extends Serializable>T andGe(F lambdaFunction, Object value) {
+    public <P>T andGe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andGe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -533,15 +532,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T andLt(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andLt(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andLt(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andLt(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andLt(F lambdaFunction, Object value) {
+    public <P>T andLt(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andLt(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -565,15 +564,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
 
 
 
-    public <F extends Serializable>T andLe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andLe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andLe(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andLe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andLe(F lambdaFunction, Object value) {
+    public <P>T andLe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andLe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -595,15 +594,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(column, Operator.NE, value);
     }
 
-    public <F extends Serializable>T andNe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andNe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andNe(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andNe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andNe(F lambdaFunction, Object value) {
+    public <P>T andNe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andNe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -624,15 +623,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T andNe2(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andNe2(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andNe2(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andNe2(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andNe2(F lambdaFunction, Object value) {
+    public <P>T andNe2(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andNe2(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -652,15 +651,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T andLLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andLLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andLLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andLLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andLLike(F lambdaFunction, Object value) {
+    public <P>T andLLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andLLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -682,15 +681,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T andNotLLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andNotLLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andNotLLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andNotLLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andNotLLike(F lambdaFunction, Object value) {
+    public <P>T andNotLLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andNotLLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -711,15 +710,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T andRLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andRLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andRLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andRLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andRLike(F lambdaFunction, Object value) {
+    public <P>T andRLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andRLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -740,15 +739,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(column, Operator.NOT_RLIKE, value);
     }
 
-    public <F extends Serializable>T andNotRLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andNotRLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andNotRLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andNotRLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andNotRLike(F lambdaFunction, Object value) {
+    public <P>T andNotRLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andNotRLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -767,15 +766,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(column, Operator.LRLIKE, value);
     }
 
-    public <F extends Serializable>T andLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andLike(F lambdaFunction, Object value) {
+    public <P>T andLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -795,15 +794,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T andNotLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T andNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return andNotLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andNotLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T andNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return andNotLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T andNotLike(F lambdaFunction, Object value) {
+    public <P>T andNotLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return andNotLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -824,15 +823,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
 
 
 
-    public <F extends Serializable>T andIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> values) {
+    public <P>T andIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> values) {
         return andIn(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T andIn(Boolean predicate, F lambdaFunction, Object... values) {
+    public <P>T andIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         return andIn(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T andIn(F lambdaFunction, Object... values) {
+    public <P>T andIn(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return andIn(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
@@ -855,15 +854,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T andNotIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> values) {
+    public <P>T andNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> values) {
         return andNotIn(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T andNotIn(Boolean predicate, F lambdaFunction, Object... values) {
+    public <P>T andNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         return andNotIn(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T andNotIn(F lambdaFunction, Object... values) {
+    public <P>T andNotIn(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return andNotIn(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
@@ -900,27 +899,27 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T andBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> values) {
+    public <P>T andBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> values) {
         return andBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T andBetween(Boolean predicate, F lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
+    public <P>T andBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
         return andBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
-    public <F extends Serializable>T andBetween(Boolean predicate, F lambdaFunction, Object... values) {
+    public <P>T andBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         return andBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T andBetween(Boolean predicate, F lambdaFunction, Object value1, Object value2) {
+    public <P>T andBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value1, Object value2) {
         return andBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
-    public <F extends Serializable>T andBetween(F lambdaFunction, Object... values) {
+    public <P>T andBetween(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return andBetween(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T andBetween(F lambdaFunction, Object value1, Object value2) {
+    public <P>T andBetween(LMDFunction<P, ?> lambdaFunction, Object value1, Object value2) {
         return andBetween(LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
@@ -959,27 +958,27 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
 
 
 
-    public <F extends Serializable>T andNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> values) {
+    public <P>T andNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> values) {
         return andNotBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T andNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
+    public <P>T andNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
         return andNotBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
-    public <F extends Serializable>T andNotBetween(Boolean predicate, F lambdaFunction, Object... values) {
+    public <P>T andNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         return andNotBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T andNotBetween(Boolean predicate, F lambdaFunction, Object value1, Object value2) {
+    public <P>T andNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value1, Object value2) {
         return andNotBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
-    public <F extends Serializable>T andNotBetween(F lambdaFunction, Object... values) {
+    public <P>T andNotBetween(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return andNotBetween(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T andNotBetween(F lambdaFunction, Object value1, Object value2) {
+    public <P>T andNotBetween(LMDFunction<P, ?> lambdaFunction, Object value1, Object value2) {
         return andNotBetween(LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
@@ -993,11 +992,11 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(column, Operator.IS_NULL);
     }
 
-    public <F extends Serializable>T andIsNull(Boolean predicate, F lambdaFunction) {
+    public <P>T andIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         return andIsNull(predicate, LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public <F extends Serializable>T andIsNull(F lambdaFunction) {
+    public <P>T andIsNull(LMDFunction<P, ?> lambdaFunction) {
         return andIsNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
@@ -1009,11 +1008,11 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(column, Operator.NOT_NULL);
     }
 
-    public <F extends Serializable>T andNotNull(Boolean predicate, F lambdaFunction) {
+    public <P>T andNotNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         return andNotNull(predicate, LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public <F extends Serializable>T andNotNull(F lambdaFunction) {
+    public <P>T andNotNull(LMDFunction<P, ?> lambdaFunction) {
         return andNotNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
@@ -1034,15 +1033,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orEq(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orEq(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orEq(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orEq(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orEq(F lambdaFunction, Object value) {
+    public <P>T orEq(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orEq(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1099,15 +1098,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return or(column, Operator.GT, value);
     }
 
-    public <F extends Serializable>T orGt(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orGt(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orGt(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orGt(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orGt(F lambdaFunction, Object value) {
+    public <P>T orGt(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orGt(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1126,15 +1125,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return or(column, Operator.GE, value);
     }
 
-    public <F extends Serializable>T orGe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orGe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orGe(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orGe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orGe(F lambdaFunction, Object value) {
+    public <P>T orGe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orGe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1156,15 +1155,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orLt(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orLt(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orLt(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orLt(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orLt(F lambdaFunction, Object value) {
+    public <P>T orLt(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orLt(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1185,15 +1184,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orLe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orLe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orLe(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orLe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orLe(F lambdaFunction, Object value) {
+    public <P>T orLe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orLe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1216,15 +1215,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orNe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orNe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orNe(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orNe(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orNe(F lambdaFunction, Object value) {
+    public <P>T orNe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orNe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1246,15 +1245,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orNe2(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orNe2(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orNe2(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orNe2(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orNe2(F lambdaFunction, Object value) {
+    public <P>T orNe2(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orNe2(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1275,15 +1274,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orLLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orLLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orLLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orLLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orLLike(F lambdaFunction, Object value) {
+    public <P>T orLLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orLLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1303,15 +1302,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orNotLLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orNotLLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orNotLLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orNotLLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orNotLLike(F lambdaFunction, Object value) {
+    public <P>T orNotLLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orNotLLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1333,15 +1332,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orRLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orRLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orRLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orRLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orRLike(F lambdaFunction, Object value) {
+    public <P>T orRLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orRLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1363,15 +1362,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orNotRLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orNotRLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orNotRLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orNotRLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orNotRLike(F lambdaFunction, Object value) {
+    public <P>T orNotRLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orNotRLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1392,15 +1391,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orLike(F lambdaFunction, Object value) {
+    public <P>T orLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1421,15 +1420,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orNotLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    public <P>T orNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         return orNotLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orNotLike(Boolean predicate, F lambdaFunction, Object value) {
+    public <P>T orNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         return orNotLike(predicate, LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    public <F extends Serializable>T orNotLike(F lambdaFunction, Object value) {
+    public <P>T orNotLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return orNotLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
@@ -1450,15 +1449,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> values) {
+    public <P>T orIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> values) {
         return orIn(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T orIn(Boolean predicate, F lambdaFunction, Object... values) {
+    public <P>T orIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         return orIn(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T orIn(F lambdaFunction, Object... values) {
+    public <P>T orIn(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return orIn(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
@@ -1479,15 +1478,15 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orNotIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> values) {
+    public <P>T orNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> values) {
         return orNotIn(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T orNotIn(Boolean predicate, F lambdaFunction, Object... values) {
+    public <P>T orNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         return orNotIn(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T orNotIn(F lambdaFunction, Object... values) {
+    public <P>T orNotIn(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return orNotIn(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
@@ -1524,27 +1523,27 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
 
 
 
-    public <F extends Serializable>T orBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> values) {
+    public <P>T orBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> values) {
         return orBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T orBetween(Boolean predicate, F lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
+    public <P>T orBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
         return orBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
-    public <F extends Serializable>T orBetween(Boolean predicate, F lambdaFunction, Object... values) {
+    public <P>T orBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         return orBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T orBetween(Boolean predicate, F lambdaFunction, Object value1, Object value2) {
+    public <P>T orBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value1, Object value2) {
         return orBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
-    public <F extends Serializable>T orBetween(F lambdaFunction, Object... values) {
+    public <P>T orBetween(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return orBetween(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T orBetween(F lambdaFunction, Object value1, Object value2) {
+    public <P>T orBetween(LMDFunction<P, ?> lambdaFunction, Object value1, Object value2) {
         return orBetween(LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
@@ -1582,27 +1581,27 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
     }
 
 
-    public <F extends Serializable>T orNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> values) {
+    public <P>T orNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> values) {
         return orNotBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T orNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
+    public <P>T orNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
         return orNotBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
-    public <F extends Serializable>T orNotBetween(Boolean predicate, F lambdaFunction, Object... values) {
+    public <P>T orNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         return orNotBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T orNotBetween(Boolean predicate, F lambdaFunction, Object value1, Object value2) {
+    public <P>T orNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value1, Object value2) {
         return orNotBetween(predicate, LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
-    public <F extends Serializable>T orNotBetween(F lambdaFunction, Object... values) {
+    public <P>T orNotBetween(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return orNotBetween(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    public <F extends Serializable>T orNotBetween(F lambdaFunction, Object value1, Object value2) {
+    public <P>T orNotBetween(LMDFunction<P, ?> lambdaFunction, Object value1, Object value2) {
         return orNotBetween(LambdaUtils.getColumnName(lambdaFunction), value1, value2);
     }
 
@@ -1616,11 +1615,11 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return or(column, Operator.IS_NULL);
     }
 
-    public <F extends Serializable>T orIsNull(Boolean predicate, F lambdaFunction) {
+    public <P>T orIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         return orIsNull(predicate, LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public <F extends Serializable>T orIsNull(F lambdaFunction) {
+    public <P>T orIsNull(LMDFunction<P, ?> lambdaFunction) {
         return orIsNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
@@ -1632,11 +1631,11 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return or(column, Operator.NOT_NULL);
     }
 
-    public <F extends Serializable>T orNotNull(Boolean predicate, F lambdaFunction) {
+    public <P>T orNotNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         return orNotNull(predicate, LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public <F extends Serializable>T orNotNull(F lambdaFunction) {
+    public <P>T orNotNull(LMDFunction<P, ?> lambdaFunction) {
         return orNotNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 

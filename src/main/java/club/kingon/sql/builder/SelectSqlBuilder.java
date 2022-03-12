@@ -7,7 +7,6 @@ import club.kingon.sql.builder.util.SqlNameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,8 +50,8 @@ public class SelectSqlBuilder implements SqlBuilder, FromSqlBuilderRoute, OrderS
                 addColumn((Alias) e);
             } else if (e instanceof Class) {
                 this.columns.addAll(ObjectMapperUtils.getColumns((Class<?>) e).stream().map(SqlNameUtils::handleName).collect(Collectors.toList()));
-            } else if (e instanceof Serializable) {
-                 this.columns.add(SqlNameUtils.handleName(LambdaUtils.getColumnName((Serializable) e)));
+            } else if (e instanceof LMDFunction) {
+                 this.columns.add(SqlNameUtils.handleName(LambdaUtils.getColumnName((LMDFunction) e)));
             } else {
                 log.warn("Column type " + e.getClass().getName() + " is an unrecognized type in from sql, ignore.");
             }

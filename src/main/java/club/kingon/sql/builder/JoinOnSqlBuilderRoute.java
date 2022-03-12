@@ -6,7 +6,6 @@ import club.kingon.sql.builder.util.ConditionUtils;
 import club.kingon.sql.builder.util.LambdaUtils;
 import club.kingon.sql.builder.util.SqlNameUtils;
 
-import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
@@ -76,18 +75,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder on(F lambdaFunction, Operator option, Object ...values) {
+    default <P>JoinOnSqlBuilder on(LMDFunction<P, ?> lambdaFunction, Operator option, Object ...values) {
         return on(LambdaUtils.getColumnName(lambdaFunction), option, values);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder on(Boolean predicate, F lambdaFunction, Operator option, Object ...values) {
+    default <P>JoinOnSqlBuilder on(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Object ...values) {
         if (Boolean.TRUE.equals(predicate)) {
             return on(LambdaUtils.getColumnName(lambdaFunction), option, values);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder on(Boolean predicate, F lambdaFunction, Operator option, Supplier<Object[]> values) {
+    default <P>JoinOnSqlBuilder on(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Operator option, Supplier<Object[]> values) {
         if (Boolean.TRUE.equals(predicate)) {
             return on(LambdaUtils.getColumnName(lambdaFunction), option, values.get());
         }
@@ -115,18 +114,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onEq(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onEq(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onEq(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onEq(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onEq(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onEq(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onEq(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onEq(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -155,18 +154,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onGt(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onGt(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onGt(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onGt(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onGt(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onGt(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onGt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onGt(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -198,18 +197,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
 
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onGe(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onGe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onGe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onGe(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onGe(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onGe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onGe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onGe(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -239,18 +238,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onLt(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onLt(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onLt(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onLt(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLt(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onLt(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onLt(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLt(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -280,18 +279,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onLe(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onLe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onLe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onLe(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLe(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onLe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onLe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLe(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -321,18 +320,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onNe(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onNe(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onNe(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNe(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNe(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNe(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onNe(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNe(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -362,18 +361,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onNe2(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onNe2(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onNe2(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNe2(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNe2(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNe2(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onNe2(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNe2(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -434,18 +433,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onLike(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -507,18 +506,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotLike(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onNotLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onNotLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onNotLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -548,18 +547,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onLLike(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onLLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onLLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onLLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onLLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onLLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -588,18 +587,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotLLike(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onNotLLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onNotLLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotLLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotLLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotLLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onNotLLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotLLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -628,18 +627,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onRLike(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onRLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onRLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onRLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onRLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onRLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onRLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -667,18 +666,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotRLike(F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onNotRLike(LMDFunction<P, ?> lambdaFunction, Object value) {
         return onNotRLike(LambdaUtils.getColumnName(lambdaFunction), value);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotRLike(Boolean predicate, F lambdaFunction, Object value) {
+    default <P>JoinOnSqlBuilder onNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotRLike(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotRLike(Boolean predicate, F lambdaFunction, Supplier<Object> value) {
+    default <P>JoinOnSqlBuilder onNotRLike(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotRLike(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -707,18 +706,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onIn(F lambdaFunction, Object... values) {
+    default <P>JoinOnSqlBuilder onIn(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return onIn(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onIn(Boolean predicate, F lambdaFunction, Object... value) {
+    default <P>JoinOnSqlBuilder onIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onIn(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>JoinOnSqlBuilder onIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onIn(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -748,18 +747,18 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotIn(F lambdaFunction, Object... values) {
+    default <P>JoinOnSqlBuilder onNotIn(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return onNotIn(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotIn(Boolean predicate, F lambdaFunction, Object... value) {
+    default <P>JoinOnSqlBuilder onNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotIn(LambdaUtils.getColumnName(lambdaFunction), value);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotIn(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>JoinOnSqlBuilder onNotIn(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotIn(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -796,25 +795,25 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onBetween(F lambdaFunction, Object... values) {
+    default <P>JoinOnSqlBuilder onBetween(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return onBetween(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onBetween(Boolean predicate, F lambdaFunction, Object... values) {
+    default <P>JoinOnSqlBuilder onBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         if (Boolean.TRUE.equals(predicate)) {
             return onBetween(LambdaUtils.getColumnName(lambdaFunction), values);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onBetween(Boolean predicate, F lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
+    default <P>JoinOnSqlBuilder onBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
         if (Boolean.TRUE.equals(predicate)) {
             return onBetween(LambdaUtils.getColumnName(lambdaFunction), value1.get(), value2.get());
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>JoinOnSqlBuilder onBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onBetween(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -851,25 +850,25 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotBetween(F lambdaFunction, Object... values) {
+    default <P>JoinOnSqlBuilder onNotBetween(LMDFunction<P, ?> lambdaFunction, Object... values) {
         return onNotBetween(LambdaUtils.getColumnName(lambdaFunction), values);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotBetween(Boolean predicate, F lambdaFunction, Object... values) {
+    default <P>JoinOnSqlBuilder onNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Object... values) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotBetween(LambdaUtils.getColumnName(lambdaFunction), values);
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
+    default <P>JoinOnSqlBuilder onNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object> value1, Supplier<Object> value2) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotBetween(LambdaUtils.getColumnName(lambdaFunction), value1.get(), value2.get());
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotBetween(Boolean predicate, F lambdaFunction, Supplier<Object[]> value) {
+    default <P>JoinOnSqlBuilder onNotBetween(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Supplier<Object[]> value) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotBetween(LambdaUtils.getColumnName(lambdaFunction), value.get());
         }
@@ -882,11 +881,11 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
         return on(Boolean.TRUE, column, Operator.IS_NULL);
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onIsNull(F lambdaFunction) {
+    default <P>JoinOnSqlBuilder onIsNull(LMDFunction<P, ?> lambdaFunction) {
         return onIsNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onIsNull(Boolean predicate, F lambdaFunction) {
+    default <P>JoinOnSqlBuilder onIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return onIsNull(LambdaUtils.getColumnName(lambdaFunction));
         }
@@ -912,11 +911,11 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    default <S extends Serializable>JoinOnSqlBuilder onNotNull(S lambdaFunction) {
+    default <P>JoinOnSqlBuilder onNotNull(LMDFunction<P, ?> lambdaFunction) {
         return onNotNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    default <F extends Serializable>JoinOnSqlBuilder onNotNull(Boolean predicate, F lambdaFunction) {
+    default <P>JoinOnSqlBuilder onNotNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
             return onNotNull(LambdaUtils.getColumnName(lambdaFunction));
         }

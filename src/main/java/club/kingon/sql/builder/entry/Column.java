@@ -1,9 +1,8 @@
 package club.kingon.sql.builder.entry;
 
+import club.kingon.sql.builder.LMDFunction;
 import club.kingon.sql.builder.util.LambdaUtils;
 import club.kingon.sql.builder.util.SqlNameUtils;
-
-import java.io.Serializable;
 
 /**
  * @author dragons
@@ -25,7 +24,7 @@ public class Column {
         return new Column(SqlNameUtils.handleName(column));
     }
 
-    public static <F extends Serializable> Column as(F lambdaFunction) {
+    public static <P> Column as(LMDFunction<P, ?> lambdaFunction) {
         return new Column(SqlNameUtils.handleName(LambdaUtils.getColumnName(lambdaFunction)));
     }
 }

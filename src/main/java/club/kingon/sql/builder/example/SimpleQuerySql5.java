@@ -1,6 +1,5 @@
 package club.kingon.sql.builder.example;
 
-import club.kingon.sql.builder.LMDFunction;
 import club.kingon.sql.builder.SqlBuilder;
 import club.kingon.sql.builder.annotation.Column;
 import club.kingon.sql.builder.annotation.Table;
@@ -45,21 +44,20 @@ class Order {
 public class SimpleQuerySql5 {
     public static void main(String[] args) {
         System.out.println(
-            SqlBuilder.selectAll()
-                .from(User.class)
-                .whereLike((LMDFunction<User, ?>) User::getUsername, "dragons")
-                .andEq((LMDFunction<User, ?>) User::getId, 3)
+            SqlBuilder.model(User.class)
+                .whereLike(User::getUsername, "dragons")
+                .andEq(User::getId, 3)
                 .build()
         );
         // 开启lambda字段表名模式
         GlobalConfig.OPEN_LAMBDA_TABLE_NAME_MODE = true;
-        // select users.id from users join orders on users.id = orders.uid
         System.out.println(
-            SqlBuilder.select((LMDFunction<User, ?>)User::getId)
-                .from(User.class)
-                .join(Order.class)
-                .on((LMDFunction<User, ?>) User::getId, Operator.EQ, club.kingon.sql.builder.entry.Column.as((LMDFunction<Order, ?>) Order::getUid))
-                .build()
+            SqlBuilder.select(User::getId)
+            .from(User.class)
+            .join(Order.class)
+            .on(User::getId, Operator.EQ, club.kingon.sql.builder.entry.Column.as(Order::getUid))
+            .build()
         );
+        // select users.id from users join orders on users.id = orders.uid
     }
 }

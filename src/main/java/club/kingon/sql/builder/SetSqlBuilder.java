@@ -3,6 +3,7 @@ package club.kingon.sql.builder;
 import club.kingon.sql.builder.entry.Constants;
 import club.kingon.sql.builder.enums.Operator;
 import club.kingon.sql.builder.util.ConditionUtils;
+import club.kingon.sql.builder.util.LambdaUtils;
 import club.kingon.sql.builder.util.SqlNameUtils;
 
 import java.util.ArrayList;
@@ -32,6 +33,11 @@ public class SetSqlBuilder implements SqlBuilder, FromSqlBuilderRoute, WhereSqlB
         addSet(column, value);
     }
 
+    protected SetSqlBuilder(String prefix, Object[] precompileArgs, LMDFunction<?, ?> lambdaFunction, Object value) {
+        this(prefix, precompileArgs);
+        addSet(lambdaFunction, value);
+    }
+
     protected SetSqlBuilder(String prefix, Object[] precompileArgs, String setter) {
         this(prefix, precompileArgs);
         setters.add(setter);
@@ -50,6 +56,12 @@ public class SetSqlBuilder implements SqlBuilder, FromSqlBuilderRoute, WhereSqlB
         return addSet(pt._1, pt._2);
     }
 
+    public <P>SetSqlBuilder addSet(LMDFunction<P, ?> lambdaFunction, Object value) {
+        Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(LambdaUtils.getColumnName(lambdaFunction)), Operator.EQ, value);
+        return addSet(pt._1, pt._2);
+    }
+
+    @Deprecated
     public SetSqlBuilder addSetColumn(String column1, String column2) {
         return addSet(ConditionUtils.parseConditionColumn(SqlNameUtils.handleName(column1), Operator.EQ, SqlNameUtils.handleName(column2)));
     }

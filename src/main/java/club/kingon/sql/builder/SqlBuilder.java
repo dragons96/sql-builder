@@ -58,6 +58,10 @@ public interface SqlBuilder extends PreparedStatementSupport {
         return new SelectSqlBuilder(null, Constants.EMPTY_OBJECT_ARRAY, columns);
     }
 
+    static <P>SelectSqlBuilder select(LMDFunction<P, ?> ...lambdaFunctions) {
+        return new SelectSqlBuilder(null, Constants.EMPTY_OBJECT_ARRAY, lambdaFunctions);
+    }
+
     /**
      * Single table merge select and from
      * @return A FromSqlBuilder instance
@@ -71,6 +75,10 @@ public interface SqlBuilder extends PreparedStatementSupport {
      */
     static InsertSqlBuilder insert(InsertMode mode, String table, String ...columns) {
         return new InsertSqlBuilder(table, mode, columns);
+    }
+
+    static <P>InsertSqlBuilder insert(InsertMode mode, String table, LMDFunction<P, ?> ...lambdaFunctions) {
+        return new InsertSqlBuilder(table, mode, lambdaFunctions);
     }
 
     static <T> ValuesSqlBuilder insert(InsertMode mode, T ...models) {
@@ -108,6 +116,10 @@ public interface SqlBuilder extends PreparedStatementSupport {
         return new InsertSqlBuilder(table, InsertMode.INSERT_INTO, columns);
     }
 
+    static <P>InsertSqlBuilder insertInto(String table, LMDFunction<P, ?>... lambdaFunctions) {
+        return new InsertSqlBuilder(table, InsertMode.INSERT_INTO, lambdaFunctions);
+    }
+
     static <T> ValuesSqlBuilder insertInto(T ...models) {
         return insert(InsertMode.INSERT_INTO, models);
     }
@@ -121,6 +133,10 @@ public interface SqlBuilder extends PreparedStatementSupport {
      */
     static InsertSqlBuilder insertIgnore(String table, String ...columns) {
         return new InsertSqlBuilder(table, InsertMode.INSERT_IGNORE, columns);
+    }
+
+    static <P>InsertSqlBuilder insertIgnore(String table, LMDFunction<P, ?>... lambdaFunctions) {
+        return new InsertSqlBuilder(table, InsertMode.INSERT_IGNORE, lambdaFunctions);
     }
 
     static <T> ValuesSqlBuilder insertIgnore(T ...models) {
@@ -138,6 +154,10 @@ public interface SqlBuilder extends PreparedStatementSupport {
         return new InsertSqlBuilder(table, InsertMode.INSERT_OVERWRITE, columns);
     }
 
+    static <P>InsertSqlBuilder insertOverwrite(String table, LMDFunction<P, ?>... lambdaFunctions) {
+        return new InsertSqlBuilder(table, InsertMode.INSERT_OVERWRITE, lambdaFunctions);
+    }
+
     static <T> ValuesSqlBuilder insertOverwrite(T ...models) {
         return insert(InsertMode.INSERT_OVERWRITE, models);
     }
@@ -151,6 +171,10 @@ public interface SqlBuilder extends PreparedStatementSupport {
      */
     static InsertSqlBuilder replaceInto(String table, String ...columns) {
         return new InsertSqlBuilder(table, InsertMode.REPLACE_INTO, columns);
+    }
+
+    static <P>InsertSqlBuilder replaceInto(String table, LMDFunction<P, ?>... lambdaFunctions) {
+        return new InsertSqlBuilder(table, InsertMode.REPLACE_INTO, lambdaFunctions);
     }
 
     static <T> ValuesSqlBuilder replaceInto(T ...models) {
