@@ -120,6 +120,11 @@ public class SimpleSqlBuilderQueryWrapper<T> extends Wrapper<T>
         return this;
     }
 
+    @SafeVarargs
+    public final <P>SimpleSqlBuilderQueryWrapper select(LMDFunction<P, ?>... lambdaFunctions) {
+        return select((Object[]) lambdaFunctions);
+    }
+
     @Override
     public SimpleSqlBuilderQueryWrapper<T> select(Class<T> entityClass, Predicate<TableFieldInfo> predicate) {
         if (selectSqlBuilder == null) {

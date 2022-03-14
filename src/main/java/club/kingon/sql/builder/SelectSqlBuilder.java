@@ -50,19 +50,7 @@ public class SelectSqlBuilder implements SqlBuilder, FromSqlBuilderRoute, OrderS
         this.prefix = prefix;
         this.precompileArgs = precompileArgs;
         this.columns = new ArrayList<>(columns.length);
-        Arrays.stream(columns).forEach(e -> {
-            if (e instanceof CharSequence) {
-                addColumn(e.toString());
-            } else if (e instanceof Alias) {
-                addColumn((Alias) e);
-            } else if (e instanceof Class) {
-                this.columns.addAll(ObjectMapperUtils.getColumns((Class<?>) e).stream().map(SqlNameUtils::handleName).collect(Collectors.toList()));
-            } else if (e instanceof LMDFunction) {
-                 this.columns.add(SqlNameUtils.handleName(LambdaUtils.getColumnName((LMDFunction) e)));
-            } else {
-                log.warn("Column type " + e.getClass().getName() + " is an unrecognized type in from sql, ignore.");
-            }
-        });
+        Arrays.stream(columns).forEach(this::handleObjectColumn);
     }
 
 
@@ -80,6 +68,27 @@ public class SelectSqlBuilder implements SqlBuilder, FromSqlBuilderRoute, OrderS
     public final <P>SelectSqlBuilder addColumn(LMDFunction<P, ?>... lambdaFunctions) {
         this.columns.addAll(Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).map(SqlNameUtils::handleName).collect(Collectors.toList()));
         return this;
+    }
+
+    public final SelectSqlBuilder addColumn(Class<?>... clazz) {
+        for (Class<?> aClass : clazz) {
+            handleObjectColumn(aClass);
+        }
+        return this;
+    }
+
+    private void handleObjectColumn(Object e) {
+        if (e instanceof CharSequence) {
+            addColumn(e.toString());
+        } else if (e instanceof Alias) {
+            addColumn((Alias) e);
+        } else if (e instanceof Class) {
+            this.columns.addAll(ObjectMapperUtils.getStrictColumnName((Class<?>) e).stream().map(SqlNameUtils::handleName).collect(Collectors.toList()));
+        } else if (e instanceof LMDFunction) {
+            this.columns.add(SqlNameUtils.handleName(LambdaUtils.getColumnName((LMDFunction) e)));
+        } else {
+            log.warn("Column type " + e.getClass().getName() + " is an unrecognized type in from sql, ignore.");
+        }
     }
 
     @Override
