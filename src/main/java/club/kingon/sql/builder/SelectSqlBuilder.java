@@ -76,7 +76,8 @@ public class SelectSqlBuilder implements SqlBuilder, FromSqlBuilderRoute, OrderS
         return this;
     }
 
-    public <P>SelectSqlBuilder addColumn(LMDFunction<P, ?>... lambdaFunctions) {
+    @SafeVarargs
+    public final <P>SelectSqlBuilder addColumn(LMDFunction<P, ?>... lambdaFunctions) {
         this.columns.addAll(Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).map(SqlNameUtils::handleName).collect(Collectors.toList()));
         return this;
     }

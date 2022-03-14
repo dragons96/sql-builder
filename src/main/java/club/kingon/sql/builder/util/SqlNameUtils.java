@@ -31,6 +31,9 @@ public class SqlNameUtils {
 
     private static String handleStrictName(String name) {
         if (!"*".equals(name) && !name.contains("(")) {
+            if (name.contains(",")) {
+                return Arrays.stream(name.split(",")).map(String::trim).map(SqlNameUtils::handleName).collect(Collectors.joining(", "));
+            }
             return "`" + name + "`";
         }
         return name;

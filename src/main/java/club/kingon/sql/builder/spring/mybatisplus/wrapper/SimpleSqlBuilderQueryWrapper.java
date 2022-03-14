@@ -1,20 +1,18 @@
 package club.kingon.sql.builder.spring.mybatisplus.wrapper;
 
+import club.kingon.sql.builder.LMDFunction;
+import club.kingon.sql.builder.SelectSqlBuilder;
 import club.kingon.sql.builder.SqlBuilder;
-import com.baomidou.mybatisplus.core.conditions.SharedString;
+import club.kingon.sql.builder.entry.Alias;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.Query;
 import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
-import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * @author dragons
@@ -27,7 +25,7 @@ public class SimpleSqlBuilderQueryWrapper<T> extends Wrapper<T>
 
     private String exprSql;
 
-    private final SharedString sqlSelect = new SharedString();
+    private SelectSqlBuilder selectSqlBuilder;
 
     private Map<String, Object> paramNameValuePairs;
 
@@ -105,21 +103,38 @@ public class SimpleSqlBuilderQueryWrapper<T> extends Wrapper<T>
     }
 
     @Override
-    public SimpleSqlBuilderQueryWrapper<T> select(Object... columnOrAlias) {
-        if (ArrayUtils.isNotEmpty(columnOrAlias)) {
-            this.sqlSelect.setStringValue(Arrays.stream(columnOrAlias).map(Object::toString).collect(Collectors.joining(StringPool.COMMA)));
+    public SimpleSqlBuilderQueryWrapper select(Object... columnOrAliasOrClass) {
+        if (selectSqlBuilder == null) {
+            selectSqlBuilder = SqlBuilder.select(columnOrAliasOrClass);
+        } else {
+            for (Object e : columnOrAliasOrClass) {
+                if (e instanceof String) {
+                    selectSqlBuilder.addColumn((String) e);
+                } else if (e instanceof Alias) {
+                    selectSqlBuilder.addColumn((Alias) e);
+                } else if (e instanceof LMDFunction) {
+                    selectSqlBuilder.addColumn((LMDFunction<?, ?>) e);
+                }
+            }
         }
         return this;
     }
 
     @Override
     public SimpleSqlBuilderQueryWrapper<T> select(Class<T> entityClass, Predicate<TableFieldInfo> predicate) {
-        this.sqlSelect.setStringValue(TableInfoHelper.getTableInfo(entityClass).chooseSelect(predicate));
+        if (selectSqlBuilder == null) {
+            selectSqlBuilder = SqlBuilder.select(TableInfoHelper.getTableInfo(entityClass).chooseSelect(predicate));
+        } else {
+            this.selectSqlBuilder.addColumn(TableInfoHelper.getTableInfo(entityClass).chooseSelect(predicate));
+        }
         return this;
     }
 
     @Override
     public String getSqlSelect() {
-        return sqlSelect.getStringValue();
+        if (selectSqlBuilder == null) {
+            return null;
+        }
+        return selectSqlBuilder.build().substring(6);
     }
 }
