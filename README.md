@@ -105,7 +105,7 @@ class Example {
             .build();
 
         // 2022-03-10 lambda表达式支持
-        // select username from user where id >= 3 and name like '%dragons%'
+        // select name from user where id >= 3 and name like '%dragons%'
         String sql10 = SqlBuilder.select(User::getUsername)
                 .from(User.class)
                 .whereGe(User::getId, 3)

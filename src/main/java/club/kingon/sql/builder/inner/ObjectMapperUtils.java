@@ -251,12 +251,6 @@ public class ObjectMapperUtils {
         return constructor;
     }
 
-    protected static String title(String fieldName) {
-        if (fieldName == null || "".equals(fieldName)) return "";
-        if (fieldName.length() == 1) return fieldName.toUpperCase();
-        return fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-    }
-
     protected static ClassMetadata getClassMeta(Class<?> clazz, List<String> ignoreFields, List<String> ignoreMethods) {
         ClassMetadata classMetadata = CLASS_METADATA_MAP.get(clazz);
         if (classMetadata == null) {

@@ -379,40 +379,6 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-
-    /**
-     * use whereLike to replace it.
-     */
-    @Deprecated
-    default WhereSqlBuilder whereLRLike(String column, Object ...values) {
-        return where(Boolean.TRUE, column, Operator.LRLIKE, values);
-    }
-
-    /**
-     * use whereLike to replace it.
-     */
-    @Deprecated
-    default WhereSqlBuilder whereLRLike(Boolean predicate, String column, Object ...values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.LRLIKE, values);
-            return new WhereSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
-    /**
-     * use whereLike to replace it.
-     */
-    @Deprecated
-    default WhereSqlBuilder whereLRLike(Boolean predicate, String column, Supplier<Object[]> values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.LRLIKE, values.get());
-            return new WhereSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
-
     default WhereSqlBuilder whereLike(String column, Object value) {
         return where(Boolean.TRUE, column, Operator.LRLIKE, value);
     }
@@ -450,40 +416,6 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
-
-
-    /**
-     * use whereNotLike to replace it.
-     */
-    @Deprecated
-    default WhereSqlBuilder whereNotLRLike(String column, Object ...values) {
-        return where(Boolean.TRUE, column, Operator.NOT_LRLIKE, values);
-    }
-
-    /**
-     * use whereNotLike to replace it.
-     */
-    @Deprecated
-    default WhereSqlBuilder whereNotLRLike(Boolean predicate, String column, Object ...values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.NOT_LRLIKE, values);
-            return new WhereSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
-    /**
-     * use whereNotLike to replace it.
-     */
-    @Deprecated
-    default WhereSqlBuilder whereNotLRLike(Boolean predicate, String column, Supplier<Object[]> values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.NOT_LRLIKE, values.get());
-            return new WhereSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
 
     default WhereSqlBuilder whereNotLike(String column, Object value) {
         return where(Boolean.TRUE, column, Operator.NOT_LRLIKE, value);

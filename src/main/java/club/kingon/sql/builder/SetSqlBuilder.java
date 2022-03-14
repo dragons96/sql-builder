@@ -61,11 +61,6 @@ public class SetSqlBuilder implements SqlBuilder, FromSqlBuilderRoute, WhereSqlB
         return addSet(pt._1, pt._2);
     }
 
-    @Deprecated
-    public SetSqlBuilder addSetColumn(String column1, String column2) {
-        return addSet(ConditionUtils.parseConditionColumn(SqlNameUtils.handleName(column1), Operator.EQ, SqlNameUtils.handleName(column2)));
-    }
-
     @Override
     public String precompileSql() {
         boolean prefixEmpty = prefix == null || "".equals(prefix), settersEmpty = setters.isEmpty();

@@ -1,13 +1,13 @@
 package club.kingon.sql.builder;
 
 
-import club.kingon.sql.builder.entry.Constants;
 import club.kingon.sql.builder.enums.Order;
+import club.kingon.sql.builder.util.LambdaUtils;
 import club.kingon.sql.builder.util.SqlNameUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * @author dragons
@@ -40,30 +40,37 @@ public class OrderSqlBuilder implements SqlBuilder, LimitSqlBuilderRoute, UnionS
         addSort(column, order);
     }
 
-    @Deprecated
-    protected OrderSqlBuilder(Supplier<Boolean> predicate, String prefix, Object[] precompileArgs, String sort) {
-        this(prefix, precompileArgs);
-        addSort(predicate, sort);
+    public <P>OrderSqlBuilder addAsc(LMDFunction<P, ?>... lambdaFunctions) {
+        return addAsc(Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).toArray(String[]::new));
     }
 
-    @Deprecated
-    protected OrderSqlBuilder(Supplier<Boolean> predicate, String prefix, Object[] precompileArgs, String column, Order order) {
-        this(prefix, precompileArgs);
-        addSort(predicate, column, order);
+    public <P>OrderSqlBuilder addAsc(Boolean predicate, LMDFunction<P, ?>... lambdaFunctions) {
+        if (prefix == null) passPredicate &= predicate;
+        if (Boolean.TRUE.equals(predicate)) {
+            return addAsc(lambdaFunctions);
+        }
+        return this;
+    }
+
+    public <P>OrderSqlBuilder addDesc(LMDFunction<P, ?>... lambdaFunctions) {
+        return addDesc(Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).toArray(String[]::new));
+    }
+
+    public <P>OrderSqlBuilder addDesc(Boolean predicate, LMDFunction<P, ?>... lambdaFunctions) {
+        if (prefix == null) passPredicate &= predicate;
+        if (Boolean.TRUE.equals(predicate)) {
+            return addDesc(lambdaFunctions);
+        }
+        return this;
     }
 
     public OrderSqlBuilder addAsc(String ...columns) {
-        return addAsc(Constants.TRUE_PREDICATE, columns);
+        return addAsc(Boolean.TRUE, columns);
     }
 
-    public OrderSqlBuilder addAsc(boolean predicate, String ...columns) {
-        return addAsc(predicate ? Constants.TRUE_PREDICATE : Constants.FALSE_PREDICATE, columns);
-    }
-
-    @Deprecated
-    public OrderSqlBuilder addAsc(Supplier<Boolean> predicate, String ...columns) {
-        if (prefix == null) passPredicate &= predicate.get();
-        if (predicate.get() && passPredicate && columns.length > 0) {
+    public OrderSqlBuilder addAsc(Boolean predicate, String ...columns) {
+        if (prefix == null) passPredicate &= predicate;
+        if (Boolean.TRUE.equals(predicate) && passPredicate && columns.length > 0) {
             for (String column : columns) {
                 addSort(column, Order.ASC);
             }
@@ -72,17 +79,12 @@ public class OrderSqlBuilder implements SqlBuilder, LimitSqlBuilderRoute, UnionS
     }
 
     public OrderSqlBuilder addDesc(String ...columns) {
-        return addDesc(Constants.TRUE_PREDICATE, columns);
+        return addDesc(Boolean.TRUE, columns);
     }
 
-    public OrderSqlBuilder addDesc(boolean predicate, String ...columns) {
-        return addDesc(predicate ? Constants.TRUE_PREDICATE : Constants.FALSE_PREDICATE, columns);
-    }
-
-    @Deprecated
-    public OrderSqlBuilder addDesc(Supplier<Boolean> predicate, String ...columns) {
-        if (prefix == null) passPredicate &= predicate.get();
-        if (predicate.get() && passPredicate && columns.length > 0) {
+    public OrderSqlBuilder addDesc(Boolean predicate, String ...columns) {
+        if (prefix == null) passPredicate &= predicate;
+        if (Boolean.TRUE.equals(predicate) && passPredicate && columns.length > 0) {
             for (String column : columns) {
                 addSort(column, Order.DESC);
             }
@@ -90,59 +92,49 @@ public class OrderSqlBuilder implements SqlBuilder, LimitSqlBuilderRoute, UnionS
         return this;
     }
 
-    public OrderSqlBuilder addSort(String column, Order order) {
-        return addSort(true, column, order);
+    public <P>OrderSqlBuilder addSort(LMDFunction<P, ?> lambdaFunction, Order order) {
+        return addSort(LambdaUtils.getColumnName(lambdaFunction), order);
     }
 
-    public OrderSqlBuilder addSort(boolean predicate, String column, Order order) {
+    public <P>OrderSqlBuilder addSort(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Order order) {
         if (prefix == null) passPredicate &= predicate;
-        if (predicate && passPredicate) {
-            sorts.add(SqlNameUtils.handleName(column) + " " + order.toString());
+        if (Boolean.TRUE.equals(predicate)) {
+            return addSort(lambdaFunction, order);
         }
         return this;
     }
 
-    @Deprecated
-    public OrderSqlBuilder addSort(Supplier<Boolean> predicate, String column, Order order) {
-        if (prefix == null) passPredicate &= predicate.get();
-        if (predicate.get() && passPredicate) {
+    public OrderSqlBuilder addSort(String column, Order order) {
+        return addSort(Boolean.TRUE, column, order);
+    }
+
+    public OrderSqlBuilder addSort(Boolean predicate, String column, Order order) {
+        if (prefix == null) passPredicate &= predicate;
+        if (Boolean.TRUE.equals(predicate) && passPredicate) {
             sorts.add(SqlNameUtils.handleName(column) + " " + order.toString());
         }
         return this;
     }
 
     public OrderSqlBuilder addSort(String sort) {
-        return addSort(true, sort);
+        return addSort(Boolean.TRUE, sort);
     }
 
-    public OrderSqlBuilder addSort(boolean predicate, String sort) {
+    public OrderSqlBuilder addSort(Boolean predicate, String sort) {
         if (prefix == null) passPredicate &= predicate;
-        if (predicate && passPredicate) {
-            sorts.add(sort);
-        }
-        return this;
-    }
-
-    @Deprecated
-    public OrderSqlBuilder addSort(Supplier<Boolean> predicate, String sort) {
-        if (prefix == null) passPredicate &= predicate.get();
-        if (predicate.get() && passPredicate) {
+        if (Boolean.TRUE.equals(predicate) && passPredicate) {
             sorts.add(sort);
         }
         return this;
     }
 
     public OrderSqlBuilder addSort(OrderSqlBuilder wrapper) {
-        return addSort(Constants.TRUE_PREDICATE, wrapper);
+        return addSort(Boolean.TRUE, wrapper);
     }
 
-    public OrderSqlBuilder addSort(boolean predicate, OrderSqlBuilder wrapper) {
-        return addSort(predicate ? Constants.TRUE_PREDICATE : Constants.FALSE_PREDICATE, wrapper);
-    }
-
-    public OrderSqlBuilder addSort(Supplier<Boolean> predicate, OrderSqlBuilder wrapper) {
-        if (prefix == null) passPredicate &= predicate.get();
-        if (predicate.get() && passPredicate && !wrapper.sorts.isEmpty()) {
+    public OrderSqlBuilder addSort(Boolean predicate, OrderSqlBuilder wrapper) {
+        if (prefix == null) passPredicate &= predicate;
+        if (Boolean.TRUE.equals(predicate) && passPredicate && wrapper != null && !wrapper.sorts.isEmpty()) {
             this.sorts.addAll(wrapper.sorts);
         }
         return this;

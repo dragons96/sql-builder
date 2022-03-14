@@ -51,6 +51,7 @@ public class SimpleQuerySql5 {
         );
         // 开启lambda字段表名模式
         GlobalConfig.OPEN_LAMBDA_TABLE_NAME_MODE = true;
+        // select users.id from users join orders on users.id = orders.uid
         System.out.println(
             SqlBuilder.select(User::getId)
             .from(User.class)
@@ -58,6 +59,6 @@ public class SimpleQuerySql5 {
             .on(User::getId, Operator.EQ, club.kingon.sql.builder.entry.Column.as(Order::getUid))
             .build()
         );
-        // select users.id from users join orders on users.id = orders.uid
+
     }
 }

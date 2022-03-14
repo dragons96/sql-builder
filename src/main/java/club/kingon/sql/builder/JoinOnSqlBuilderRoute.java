@@ -379,40 +379,6 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-
-    /**
-     * use onLike to replace it.
-     */
-    @Deprecated
-    default JoinOnSqlBuilder onLRLike(String column, Object ...values) {
-        return on(Boolean.TRUE, column, Operator.LRLIKE, values);
-    }
-
-    /**
-     * use onLike to replace it.
-     */
-    @Deprecated
-    default JoinOnSqlBuilder onLRLike(Boolean predicate, String column, Object ...values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.LRLIKE, values);
-            return new JoinOnSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
-    /**
-     * use onLike to replace it.
-     */
-    @Deprecated
-    default JoinOnSqlBuilder onLRLike(Boolean predicate, String column, Supplier<Object[]> values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.LRLIKE, values.get());
-            return new JoinOnSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
-
     default JoinOnSqlBuilder onLike(String column, Object value) {
         return on(Boolean.TRUE, column, Operator.LRLIKE, value);
     }
@@ -450,40 +416,6 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
-
-
-    /**
-     * use onNotLike to replace it.
-     */
-    @Deprecated
-    default JoinOnSqlBuilder onNotLRLike(String column, Object ...values) {
-        return on(Boolean.TRUE, column, Operator.NOT_LRLIKE, values);
-    }
-
-    /**
-     * use onNotLike to replace it.
-     */
-    @Deprecated
-    default JoinOnSqlBuilder onNotLRLike(Boolean predicate, String column, Object ...values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.NOT_LRLIKE, values);
-            return new JoinOnSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
-    /**
-     * use onNotLike to replace it.
-     */
-    @Deprecated
-    default JoinOnSqlBuilder onNotLRLike(Boolean predicate, String column, Supplier<Object[]> values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.NOT_LRLIKE, values.get());
-            return new JoinOnSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
 
     default JoinOnSqlBuilder onNotLike(String column, Object value) {
         return on(Boolean.TRUE, column, Operator.NOT_LRLIKE, value);

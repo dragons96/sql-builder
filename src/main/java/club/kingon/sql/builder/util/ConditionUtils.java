@@ -89,33 +89,6 @@ public class ConditionUtils {
         return Stream.of(e);
     }
 
-    @Deprecated
-    public static String parseCondition(String column, Operator option, Object ...value) {
-        if (option == Operator.IN || option == Operator.NOT_IN) {
-            return column + " " + option.getOptions().get(0) + Arrays.stream(value)
-                .flatMap(e -> {
-                    if (e instanceof Collection) return ((Collection) e).stream();
-                    return Stream.of(e);
-                })
-                .map(ConditionUtils::parseValue).collect(Collectors.joining(", ")) + option.getOptions().get(1);
-        } else if (option == Operator.BETWEEN_AND) {
-            return column + " " + option.getOptions().get(0) + " " +
-                Arrays.stream(value).flatMap(e -> {
-                    if (e instanceof Collection) return ((Collection) e).stream();
-                    return Stream.of(e);
-                }).limit(2).map(ConditionUtils::parseValue).collect(Collectors.joining(" " + option.getOptions().get(1) + " "));
-        } else if (option == Operator.LLIKE || option == Operator.NOT_LLIKE) {
-            return column + " " + option.getOptions().get(0) + " " +  parseValue("%" + value[0]);
-        } else if (option == Operator.RLIKE || option == Operator.NOT_RLIKE) {
-            return column + " " + option.getOptions().get(0) + " " +  parseValue(value[0] + "%");
-        } else if (option == Operator.LRLIKE || option == Operator.NOT_LRLIKE) {
-            return column + " " + option.getOptions().get(0) + " " +  parseValue("%"+ value[0] + "%");
-        } else if (option == Operator.IS_NULL || option == Operator.NOT_NULL) {
-            return column + " " + option.getOptions().get(0);
-        }
-        return column + " " + option.getOptions().get(0) + " " + parseValue(value[0]);
-    }
-
     public static String parseValue(Object value) {
         if (value instanceof CharSequence) return "'" + value.toString().replace("'", "\\'") + "'";
         else if (value instanceof Column) return ((Column) value).getName();

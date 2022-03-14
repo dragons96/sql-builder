@@ -380,39 +380,6 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
     }
 
 
-    /**
-     * use havingLike to replace it.
-     */
-    @Deprecated
-    default HavingSqlBuilder havingLRLike(String column, Object ...values) {
-        return having(Boolean.TRUE, column, Operator.LRLIKE, values);
-    }
-
-    /**
-     * use havingLike to replace it.
-     */
-    @Deprecated
-    default HavingSqlBuilder havingLRLike(Boolean predicate, String column, Object ...values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.LRLIKE, values);
-            return new HavingSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
-    /**
-     * use havingLike to replace it.
-     */
-    @Deprecated
-    default HavingSqlBuilder havingLRLike(Boolean predicate, String column, Supplier<Object[]> values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.LRLIKE, values.get());
-            return new HavingSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
-
     default HavingSqlBuilder havingLike(String column, Object value) {
         return having(Boolean.TRUE, column, Operator.LRLIKE, value);
     }
@@ -450,40 +417,6 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
-
-
-    /**
-     * use havingNotLike to replace it.
-     */
-    @Deprecated
-    default HavingSqlBuilder havingNotLRLike(String column, Object ...values) {
-        return having(Boolean.TRUE, column, Operator.NOT_LRLIKE, values);
-    }
-
-    /**
-     * use havingNotLike to replace it.
-     */
-    @Deprecated
-    default HavingSqlBuilder havingNotLRLike(Boolean predicate, String column, Object ...values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.NOT_LRLIKE, values);
-            return new HavingSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
-    /**
-     * use havingNotLike to replace it.
-     */
-    @Deprecated
-    default HavingSqlBuilder havingNotLRLike(Boolean predicate, String column, Supplier<Object[]> values) {
-        if (Boolean.TRUE.equals(predicate)) {
-            Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.NOT_LRLIKE, values.get());
-            return new HavingSqlBuilder(Boolean.TRUE, precompileSql(), precompileArgs(), pt._1, pt._2);
-        }
-        return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
-    }
-
 
     default HavingSqlBuilder havingNotLike(String column, Object value) {
         return having(Boolean.TRUE, column, Operator.NOT_LRLIKE, value);

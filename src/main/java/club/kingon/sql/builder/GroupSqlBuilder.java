@@ -1,5 +1,6 @@
 package club.kingon.sql.builder;
 
+import club.kingon.sql.builder.util.LambdaUtils;
 import club.kingon.sql.builder.util.SqlNameUtils;
 
 import java.util.Arrays;
@@ -35,6 +36,11 @@ public class GroupSqlBuilder implements SqlBuilder, HavingSqlBuilderRoute, Order
 
     public GroupSqlBuilder addColumn(SqlBuilder...columns) {
         this.columns.addAll(Arrays.stream(columns).map(s -> "(" + s.build() + ")").collect(Collectors.toList()));
+        return this;
+    }
+
+    public <P>GroupSqlBuilder addColumn(LMDFunction<P, ?>... lambdaFunctions) {
+        this.columns.addAll(Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).map(SqlNameUtils::handleName).collect(Collectors.toList()));
         return this;
     }
 

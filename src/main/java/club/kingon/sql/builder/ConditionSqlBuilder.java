@@ -305,12 +305,6 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return or(LambdaUtils.getColumnName(lambdaFunction), option, values);
     }
 
-    @Deprecated
-    public T or(String column, Operator option, Supplier<Object[]> values) {
-        Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), option, values.get());
-        return or(pt._1, pt._2);
-    }
-
     public T or(T wrapper) {
         if (wrapper != null) {
             return (T) or("(" + wrapper.conditionBuilder.toString() + ")", wrapper.precompileArgs);
