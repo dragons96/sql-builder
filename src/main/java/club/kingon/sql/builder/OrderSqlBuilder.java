@@ -40,7 +40,8 @@ public class OrderSqlBuilder implements SqlBuilder, LimitSqlBuilderRoute, UnionS
         addSort(column, order);
     }
 
-    public <P>OrderSqlBuilder addAsc(LMDFunction<P, ?>... lambdaFunctions) {
+    @SafeVarargs
+    public final <P>OrderSqlBuilder addAsc(LMDFunction<P, ?>... lambdaFunctions) {
         return addAsc(Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).toArray(String[]::new));
     }
 
@@ -52,7 +53,8 @@ public class OrderSqlBuilder implements SqlBuilder, LimitSqlBuilderRoute, UnionS
         return this;
     }
 
-    public <P>OrderSqlBuilder addDesc(LMDFunction<P, ?>... lambdaFunctions) {
+    @SafeVarargs
+    public final <P>OrderSqlBuilder addDesc(LMDFunction<P, ?>... lambdaFunctions) {
         return addDesc(Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).toArray(String[]::new));
     }
 
