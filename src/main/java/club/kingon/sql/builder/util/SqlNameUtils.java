@@ -14,7 +14,7 @@ public class SqlNameUtils {
 
     public static String handleName(Alias alias) {
         if (GlobalConfig.OPEN_STRICT_MODE && alias != null) {
-            return handleStrictName(alias.toString());
+            return handleName(alias.toString());
         }
         return "";
     }
