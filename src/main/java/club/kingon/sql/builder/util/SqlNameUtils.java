@@ -14,10 +14,7 @@ public class SqlNameUtils {
 
     public static String handleName(Alias alias) {
         if (GlobalConfig.OPEN_STRICT_MODE && alias != null) {
-            if (alias.getAlias() == null || "".equals(alias.getAlias())) {
-                return handleStrictName(alias.getOrigin());
-            }
-            return "`" + handleStrictName(alias.getOrigin()) + "` as `" + handleStrictName(alias.getAlias()) + "`";
+            return handleStrictName(alias.toString());
         }
         return "";
     }
@@ -33,6 +30,11 @@ public class SqlNameUtils {
         if (!"*".equals(name) && !name.contains("(")) {
             if (name.contains(",")) {
                 return Arrays.stream(name.split(",")).map(String::trim).map(SqlNameUtils::handleName).collect(Collectors.joining(", "));
+            } else if (name.contains("as")) {
+                String[] columnAndAlias = name.split("as");
+                return "`" + columnAndAlias[0].trim() + "` as `" + columnAndAlias[1].trim() + "`";
+            } else if (name.startsWith("`")) {
+                return name;
             }
             return "`" + name + "`";
         }

@@ -23,4 +23,8 @@ public interface SelectSqlBuilderRoute extends SqlBuilder {
     default SelectSqlBuilder select(Object ...columns) {
         return new SelectSqlBuilder(precompileSql(), precompileArgs(), columns);
     }
+
+    default <P>SelectSqlBuilder select(LMDFunction<P, ?>... lambdaFunctions) {
+        return new SelectSqlBuilder(precompileSql(), precompileArgs(), lambdaFunctions);
+    }
 }

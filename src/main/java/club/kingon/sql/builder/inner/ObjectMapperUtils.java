@@ -6,6 +6,7 @@ import club.kingon.sql.builder.Tuple2;
 import club.kingon.sql.builder.annotation.Column;
 import club.kingon.sql.builder.annotation.Primary;
 import club.kingon.sql.builder.annotation.Table;
+import club.kingon.sql.builder.config.GlobalConfig;
 import club.kingon.sql.builder.entry.Alias;
 
 import java.lang.annotation.Annotation;
@@ -42,6 +43,14 @@ public class ObjectMapperUtils {
             return humpNameToUnderlinedName(clazz.getSimpleName(), sep);
         }
         return table.value();
+    }
+
+    public static List<String> getStrictColumnName(Class<?> clazz) {
+        if (GlobalConfig.OPEN_LAMBDA_TABLE_NAME_MODE) {
+            String tableName = getTableName(clazz);
+            return getColumnFields(clazz).stream().map(e -> tableName + "." + e.getOrigin()).collect(Collectors.toList());
+        }
+        return getColumns(clazz);
     }
 
     public static List<String> getColumns(Class<?> clazz) {
