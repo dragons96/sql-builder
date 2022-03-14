@@ -9,6 +9,17 @@
 ##### 4. 支持动态查询条件, 仅在条件成立时会生成对应sql片段, 支持Supplier接口提供具体值.(例: Conditions.whereIn(true, "b", 1, 2).andEq(false, "a", () -> 5))
 ##### 5. SpringBoot JdbcTemplate, Mybatis-Plus无缝集成, 无需修改代码即可轻松使用。(Ps: Mybatis-Plus集成支持联表查询, 推荐使用BaseMapper#selectMaps方法获取联表数据)
 ##### 6. 支持类似Mybatis-Plus语法的 lambda 表达式条件查询，(例: Conditions.whereGe(User::getId, 3).andLike(User::getUsername, "dra"))
+
+### 使用方式
+##### maven 引入配置
+```
+<dependency>
+    <groupId>io.github.dragons96</groupId>
+    <artifactId>sql-builder</artifactId>
+    <version>0.0.5</version>
+</dependency>
+```
+
 ### 3分钟上手教程
 
 ##### 构建 DQL SQL
