@@ -13,8 +13,12 @@ import java.util.stream.Collectors;
 public class SqlNameUtils {
 
     public static String handleName(Alias alias) {
-        if (GlobalConfig.OPEN_STRICT_MODE && alias != null) {
-            return handleName(alias.toString());
+        if (alias != null) {
+            if (GlobalConfig.OPEN_STRICT_MODE) {
+                return handleName(alias.toString());
+            } else {
+                return alias.toString();
+            }
         }
         return "";
     }
