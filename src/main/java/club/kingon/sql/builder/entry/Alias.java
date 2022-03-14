@@ -1,6 +1,8 @@
 package club.kingon.sql.builder.entry;
 
+import club.kingon.sql.builder.LMDFunction;
 import club.kingon.sql.builder.SqlBuilder;
+import club.kingon.sql.builder.util.LambdaUtils;
 
 import java.util.Objects;
 
@@ -21,6 +23,10 @@ public class Alias {
     private Alias(String origin, String alias) {
         this.origin = origin;
         this.alias = alias;
+    }
+
+    public static <P>Alias of(LMDFunction<P, ?> lambdaFunction, String alias) {
+        return new Alias(LambdaUtils.getColumnName(lambdaFunction), alias);
     }
 
     public static Alias of(String origin) {
