@@ -804,11 +804,11 @@ public class Conditions {
     }
 
 
-    public static WhereSqlBuilder whereIsNull(String column) {
+    public static WhereSqlBuilder whereNull(String column) {
         return where(Boolean.TRUE, column, Operator.IS_NULL);
     }
 
-    public static WhereSqlBuilder whereIsNull(Boolean predicate, String column) {
+    public static WhereSqlBuilder whereNull(Boolean predicate, String column) {
         if (predicate) {
             Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.IS_NULL);
             return new WhereSqlBuilder(Boolean.TRUE, null, Constants.EMPTY_OBJECT_ARRAY, pt._1, pt._2);
@@ -816,13 +816,13 @@ public class Conditions {
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <P>WhereSqlBuilder whereIsNull(LMDFunction<P, ?> lambdaFunction) {
-        return whereIsNull(LambdaUtils.getColumnName(lambdaFunction));
+    public static <P>WhereSqlBuilder whereNull(LMDFunction<P, ?> lambdaFunction) {
+        return whereNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public static <P>WhereSqlBuilder whereIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
+    public static <P>WhereSqlBuilder whereNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
-            return whereIsNull(LambdaUtils.getColumnName(lambdaFunction));
+            return whereNull(LambdaUtils.getColumnName(lambdaFunction));
         }
         return new WhereSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
@@ -1683,11 +1683,11 @@ public class Conditions {
     }
 
 
-    public static JoinOnSqlBuilder onIsNull(String column) {
+    public static JoinOnSqlBuilder onNull(String column) {
         return on(Boolean.TRUE, column, Operator.IS_NULL);
     }
 
-    public static JoinOnSqlBuilder onIsNull(Boolean predicate, String column) {
+    public static JoinOnSqlBuilder onNull(Boolean predicate, String column) {
         if (predicate) {
             Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.IS_NULL);
             return new JoinOnSqlBuilder(Boolean.TRUE, null, Constants.EMPTY_OBJECT_ARRAY, pt._1, pt._2);
@@ -1695,13 +1695,13 @@ public class Conditions {
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <P>JoinOnSqlBuilder onIsNull(LMDFunction<P, ?> lambdaFunction) {
-        return onIsNull(LambdaUtils.getColumnName(lambdaFunction));
+    public static <P>JoinOnSqlBuilder onNull(LMDFunction<P, ?> lambdaFunction) {
+        return onNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public static <P>JoinOnSqlBuilder onIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
+    public static <P>JoinOnSqlBuilder onNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
-            return onIsNull(LambdaUtils.getColumnName(lambdaFunction));
+            return onNull(LambdaUtils.getColumnName(lambdaFunction));
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
@@ -2564,11 +2564,11 @@ public class Conditions {
     }
 
 
-    public static HavingSqlBuilder havingIsNull(String column) {
+    public static HavingSqlBuilder havingNull(String column) {
         return having(Boolean.TRUE, column, Operator.IS_NULL);
     }
 
-    public static HavingSqlBuilder havingIsNull(Boolean predicate, String column) {
+    public static HavingSqlBuilder havingNull(Boolean predicate, String column) {
         if (predicate) {
             Tuple2<String, Object[]> pt = ConditionUtils.parsePrecompileCondition(SqlNameUtils.handleName(column), Operator.IS_NULL);
             return new HavingSqlBuilder(Boolean.TRUE, null, Constants.EMPTY_OBJECT_ARRAY, pt._1, pt._2);
@@ -2576,13 +2576,13 @@ public class Conditions {
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }
 
-    public static <P>HavingSqlBuilder havingIsNull(LMDFunction<P, ?> lambdaFunction) {
-        return havingIsNull(LambdaUtils.getColumnName(lambdaFunction));
+    public static <P>HavingSqlBuilder havingNull(LMDFunction<P, ?> lambdaFunction) {
+        return havingNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public static <P>HavingSqlBuilder havingIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
+    public static <P>HavingSqlBuilder havingNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
-            return havingIsNull(LambdaUtils.getColumnName(lambdaFunction));
+            return havingNull(LambdaUtils.getColumnName(lambdaFunction));
         }
         return new HavingSqlBuilder(Boolean.FALSE, null, Constants.EMPTY_OBJECT_ARRAY);
     }

@@ -809,22 +809,22 @@ public interface JoinOnSqlBuilderRoute extends SqlBuilder {
 
 
 
-    default JoinOnSqlBuilder onIsNull(String column) {
+    default JoinOnSqlBuilder onNull(String column) {
         return on(Boolean.TRUE, column, Operator.IS_NULL);
     }
 
-    default <P>JoinOnSqlBuilder onIsNull(LMDFunction<P, ?> lambdaFunction) {
-        return onIsNull(LambdaUtils.getColumnName(lambdaFunction));
+    default <P>JoinOnSqlBuilder onNull(LMDFunction<P, ?> lambdaFunction) {
+        return onNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    default <P>JoinOnSqlBuilder onIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
+    default <P>JoinOnSqlBuilder onNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
-            return onIsNull(LambdaUtils.getColumnName(lambdaFunction));
+            return onNull(LambdaUtils.getColumnName(lambdaFunction));
         }
         return new JoinOnSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default JoinOnSqlBuilder onIsNull(Boolean predicate, String column) {
+    default JoinOnSqlBuilder onNull(Boolean predicate, String column) {
         if (Boolean.TRUE.equals(predicate)) {
             return on(Boolean.TRUE, column, Operator.IS_NULL);
         }

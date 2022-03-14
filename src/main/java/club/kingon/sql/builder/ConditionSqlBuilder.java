@@ -978,20 +978,20 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
 
 
 
-    public T andIsNull(Boolean predicate, String column) {
+    public T andNull(Boolean predicate, String column) {
         return and(predicate, column, Operator.IS_NULL);
     }
 
-    public T andIsNull(String column) {
+    public T andNull(String column) {
         return and(column, Operator.IS_NULL);
     }
 
-    public <P>T andIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
-        return andIsNull(predicate, LambdaUtils.getColumnName(lambdaFunction));
+    public <P>T andNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
+        return andNull(predicate, LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public <P>T andIsNull(LMDFunction<P, ?> lambdaFunction) {
-        return andIsNull(LambdaUtils.getColumnName(lambdaFunction));
+    public <P>T andNull(LMDFunction<P, ?> lambdaFunction) {
+        return andNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
     public T andNotNull(Boolean predicate, String column) {
@@ -1601,20 +1601,20 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
 
 
 
-    public T orIsNull(Boolean predicate, String column) {
+    public T orNull(Boolean predicate, String column) {
         return or(predicate, column, Operator.IS_NULL);
     }
 
-    public T orIsNull(String column) {
+    public T orNull(String column) {
         return or(column, Operator.IS_NULL);
     }
 
-    public <P>T orIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
-        return orIsNull(predicate, LambdaUtils.getColumnName(lambdaFunction));
+    public <P>T orNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
+        return orNull(predicate, LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    public <P>T orIsNull(LMDFunction<P, ?> lambdaFunction) {
-        return orIsNull(LambdaUtils.getColumnName(lambdaFunction));
+    public <P>T orNull(LMDFunction<P, ?> lambdaFunction) {
+        return orNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
     public T orNotNull(Boolean predicate, String column) {
