@@ -14,6 +14,7 @@ public interface GroupSqlBuilderRoute extends SqlBuilder {
         return new GroupSqlBuilder(precompileSql(), precompileArgs(), columns);
     }
 
+    @SuppressWarnings({"unchecked", "varargs"})
     default <P>GroupSqlBuilder groupBy(LMDFunction<P, ?>... lambdaFunctions) {
         return new GroupSqlBuilder(precompileSql(), precompileArgs(), Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).toArray(String[]::new));
     }

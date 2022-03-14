@@ -193,6 +193,10 @@ public interface SqlBuilder extends PreparedStatementSupport {
         return new UpdateSqlBuilder(table);
     }
 
+    static UpdateSqlBuilder update(Class<?> clazz) {
+        return new UpdateSqlBuilder(ObjectMapperUtils.getTableName(clazz));
+    }
+
     static <T> WhereSqlBuilder update(T model) {
         Class<?> clazz = model.getClass();
         String tableName = ObjectMapperUtils.getTableName(clazz);
@@ -222,13 +226,20 @@ public interface SqlBuilder extends PreparedStatementSupport {
                 }
             }
 
+            if (setSqlBuilder == null) {
+                throw new SqlBuilderException("Update model property has at least one non primary key column");
+            }
+
             WhereSqlBuilder whereSqlBuilder = null;
             if (!primaryMapping.isEmpty()) {
                 for (Map.Entry<String, Object> entry : primaryMapping.entrySet()) {
-                    if (whereSqlBuilder == null) {
-                        whereSqlBuilder = setSqlBuilder.where(entry.getKey(), Operator.EQ, entry.getValue());
-                    } else {
-                        whereSqlBuilder = whereSqlBuilder.and(entry.getKey(), Operator.EQ, entry.getValue());
+                    // value must be not null.
+                    if (entry.getValue() != null) {
+                        if (whereSqlBuilder == null) {
+                            whereSqlBuilder = setSqlBuilder.where(entry.getKey(), Operator.EQ, entry.getValue());
+                        } else {
+                            whereSqlBuilder = whereSqlBuilder.and(entry.getKey(), Operator.EQ, entry.getValue());
+                        }
                     }
                 }
             } else {
@@ -247,8 +258,35 @@ public interface SqlBuilder extends PreparedStatementSupport {
         return new DeleteSqlBuilder(table);
     }
 
-    static <T> DeleteSqlBuilder delete(T model) {
-        Class<?> clazz = model.getClass();
+    static DeleteSqlBuilder delete(Class<?> clazz) {
         return new DeleteSqlBuilder(ObjectMapperUtils.getTableName(clazz));
+    }
+
+    static <T> WhereSqlBuilder delete(T model) {
+        Class<?> clazz = model.getClass();
+        DeleteSqlBuilder deleteSqlBuilder = new DeleteSqlBuilder(ObjectMapperUtils.getTableName(clazz));
+        List<Alias> primaries = ObjectMapperUtils.getPrimaries(clazz);
+        try {
+            Map<String, Object> primaryMapping = primaries == null || primaries.isEmpty() ? Collections.emptyMap() : ObjectMapperUtils.getColumnAndValues(model, primaries);
+            WhereSqlBuilder whereSqlBuilder = null;
+            if (!primaryMapping.isEmpty()) {
+                for (Map.Entry<String, Object> entry : primaryMapping.entrySet()) {
+                    // value must be not null.
+                    if (entry.getValue() != null) {
+                        if (whereSqlBuilder == null) {
+                            whereSqlBuilder = deleteSqlBuilder.where(entry.getKey(), Operator.EQ, entry.getValue());
+                        } else {
+                            whereSqlBuilder = whereSqlBuilder.and(entry.getKey(), Operator.EQ, entry.getValue());
+                        }
+                    }
+                }
+            } else {
+                whereSqlBuilder = deleteSqlBuilder.where("");
+            }
+            return whereSqlBuilder;
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new SqlBuilderException("Obtaining the model value is abnormal", e);
+        }
+
     }
 }

@@ -39,7 +39,8 @@ public class GroupSqlBuilder implements SqlBuilder, HavingSqlBuilderRoute, Order
         return this;
     }
 
-    public <P>GroupSqlBuilder addColumn(LMDFunction<P, ?>... lambdaFunctions) {
+    @SafeVarargs
+    public final <P>GroupSqlBuilder addColumn(LMDFunction<P, ?>... lambdaFunctions) {
         this.columns.addAll(Arrays.stream(lambdaFunctions).map(LambdaUtils::getColumnName).map(SqlNameUtils::handleName).collect(Collectors.toList()));
         return this;
     }
