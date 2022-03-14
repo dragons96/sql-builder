@@ -103,7 +103,7 @@ public class SimpleSqlBuilderQueryWrapper<T> extends Wrapper<T>
     }
 
     @Override
-    public SimpleSqlBuilderQueryWrapper select(Object... columnOrAliasOrClass) {
+    public SimpleSqlBuilderQueryWrapper<T> select(Object... columnOrAliasOrClass) {
         if (selectSqlBuilder == null) {
             selectSqlBuilder = SqlBuilder.select(columnOrAliasOrClass);
         } else {
@@ -121,7 +121,7 @@ public class SimpleSqlBuilderQueryWrapper<T> extends Wrapper<T>
     }
 
     @SafeVarargs
-    public final <P>SimpleSqlBuilderQueryWrapper select(LMDFunction<P, ?>... lambdaFunctions) {
+    public final <P>SimpleSqlBuilderQueryWrapper<T> select(LMDFunction<P, ?>... lambdaFunctions) {
         return select((Object[]) lambdaFunctions);
     }
 

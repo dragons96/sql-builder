@@ -1,6 +1,7 @@
 package club.kingon.sql.builder;
 
 import club.kingon.sql.builder.enums.Order;
+import club.kingon.sql.builder.util.LambdaUtils;
 
 import java.util.function.Supplier;
 
@@ -39,6 +40,17 @@ public interface OrderSqlBuilderRoute extends SqlBuilder {
         return new OrderSqlBuilder(precompileSql(), precompileArgs());
     }
 
+    default <P>OrderSqlBuilder orderBy(LMDFunction<P, ?> lambdaFunction, Order order) {
+        return orderBy(LambdaUtils.getColumnName(lambdaFunction), order);
+    }
+
+    default <P>OrderSqlBuilder orderBy(Boolean predicate, LMDFunction<P, ?> lambdaFunction, Order order) {
+        if (Boolean.TRUE.equals(predicate)) {
+            return orderBy(lambdaFunction, order);
+        }
+        return new OrderSqlBuilder(precompileSql(), precompileArgs());
+    }
+
     default OrderSqlBuilder orderByAsc(String ...columns) {
         return orderByAsc(Boolean.TRUE, columns);
     }
@@ -46,6 +58,17 @@ public interface OrderSqlBuilderRoute extends SqlBuilder {
     default OrderSqlBuilder orderByAsc(Boolean predicate, String ...columns) {
         if (Boolean.TRUE.equals(predicate)) {
             return new OrderSqlBuilder(precompileSql(), precompileArgs()).addAsc(columns);
+        }
+        return new OrderSqlBuilder(precompileSql(), precompileArgs());
+    }
+
+    default <P>OrderSqlBuilder orderByAsc(LMDFunction<P, ?> lambdaFunctions) {
+        return new OrderSqlBuilder(precompileSql(), precompileArgs()).addAsc(lambdaFunctions);
+    }
+
+    default <P>OrderSqlBuilder orderByAsc(Boolean predicate, LMDFunction<P, ?> lambdaFunctions) {
+        if (Boolean.TRUE.equals(predicate)) {
+            return orderByAsc(lambdaFunctions);
         }
         return new OrderSqlBuilder(precompileSql(), precompileArgs());
     }
@@ -61,4 +84,17 @@ public interface OrderSqlBuilderRoute extends SqlBuilder {
         }
         return new OrderSqlBuilder(precompileSql(), precompileArgs());
     }
+
+
+    default <P>OrderSqlBuilder orderByDesc(LMDFunction<P, ?> lambdaFunctions) {
+        return new OrderSqlBuilder(precompileSql(), precompileArgs()).addDesc(lambdaFunctions);
+    }
+
+    default <P>OrderSqlBuilder orderByDesc(Boolean predicate, LMDFunction<P, ?> lambdaFunctions) {
+        if (Boolean.TRUE.equals(predicate)) {
+            return orderByDesc(lambdaFunctions);
+        }
+        return new OrderSqlBuilder(precompileSql(), precompileArgs());
+    }
+
 }
