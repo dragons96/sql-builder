@@ -1,5 +1,6 @@
 package club.kingon.sql.builder;
 
+import club.kingon.sql.builder.util.LambdaUtils;
 import club.kingon.sql.builder.util.SqlNameUtils;
 
 /**
@@ -9,7 +10,13 @@ import club.kingon.sql.builder.util.SqlNameUtils;
 public interface DuplicateKeyUpdateSqlBuilderRoute extends SqlBuilder {
 
     default DuplicateKeyUpdateSqlBuilder onDuplicateKeyUpdateColumn(String column) {
-        return new DuplicateKeyUpdateSqlBuilder(precompileSql(), precompileArgs(), SqlNameUtils.handleName(column) + " = values(" + SqlNameUtils.handleName(column) + ")");
+        column = SqlNameUtils.handleName(column);
+        return new DuplicateKeyUpdateSqlBuilder(precompileSql(), precompileArgs(),  column+ " = values(" + column + ")");
+    }
+
+    default <P>DuplicateKeyUpdateSqlBuilder onDuplicateKeyUpdateColumn(LMDFunction<P, ?> lambdaFunctions) {
+        String column = SqlNameUtils.handleName(LambdaUtils.getColumnName(lambdaFunctions));
+        return new DuplicateKeyUpdateSqlBuilder(precompileSql(), precompileArgs(),  column + " = values(" + column + ")");
     }
 
     default DuplicateKeyUpdateSqlBuilder onDuplicateKeyUpdateSetter(String setter) {

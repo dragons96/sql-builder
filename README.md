@@ -8,15 +8,34 @@
 ##### 3. 面向对象思维, 除了基础查询传参方式外, 还支持map条件, criteria条件, 对于in, between and 等多值参数语法支持数组, 集合传参, 在criteria下还支持集合属性映射, 值映射等功能.(例: Conditions.whereIn("a", 1, 2, 3 ,4) 等同于 Conditions.whereIn("a", Arrays.asList(1, 2, 3, 4))) (PS: 使用Map条件时, 若value为数组则必须使用对象类型数组例如new Integer[]{}, 而不能使用基础类型数组new int[]{})
 ##### 4. 支持动态查询条件, 仅在条件成立时会生成对应sql片段, 支持Supplier接口提供具体值.(例: Conditions.whereIn(true, "b", 1, 2).andEq(false, "a", () -> 5))
 ##### 5. SpringBoot JdbcTemplate, Mybatis-Plus无缝集成, 无需修改代码即可轻松使用。(Ps: Mybatis-Plus集成支持联表查询, 推荐使用BaseMapper#selectMaps方法获取联表数据)
+##### 6. 支持类似Mybatis-Plus语法的 lambda 表达式条件查询，(例: Conditions.whereGe(User::getId, 3).andLike(User::getUsername, "dra"))
 ### 3分钟上手教程
 
 ##### 构建 DQL SQL
 
 ```java
 import club.kingon.sql.builder.SqlBuilder;
+import club.kingon.sql.builder.annotation.Table;
 import club.kingon.sql.builder.entry.Alias;
 import club.kingon.sql.builder.entry.Column;
 import club.kingon.sql.builder.enums.Operator;
+
+@Table("user")
+class User {
+
+    private String id;
+
+    @club.kingon.sql.builder.annotation.Column("name")
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getId() {
+        return id;
+    }
+}
 
 class Example {
     public static void main(String[] args) {
@@ -84,6 +103,14 @@ class Example {
                     , "t1")
             ).where("column7", Operator.BETWEEN_AND, 3, 10)
             .build();
+
+        // 2022-03-10 lambda表达式支持
+        // select username from user where id >= 3 and name like '%dragons%'
+        String sql10 = SqlBuilder.select(User::getUsername)
+                .from(User.class)
+                .whereGe(User::getId, 3)
+                .andLike(User::getUsername, "dragons")
+                .build();
 
         // 进阶内容
         // 条件优先级调整查询 "SELECT * FROM table_a, t1 WHERE column1 = 'aa' AND (column2 = 'cc' OR column7 > 10)"

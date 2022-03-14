@@ -1,5 +1,6 @@
 package club.kingon.sql.builder;
 
+import club.kingon.sql.builder.util.LambdaUtils;
 import club.kingon.sql.builder.util.SqlNameUtils;
 
 import java.util.ArrayList;
@@ -32,12 +33,19 @@ public class DuplicateKeyUpdateSqlBuilder implements SqlBuilder {
     }
 
     public DuplicateKeyUpdateSqlBuilder addUpdateColumn(String column) {
-        setters.add(SqlNameUtils.handleName(column) + " = " + sign + "(" + SqlNameUtils.handleName(column) + ")");
+        column = SqlNameUtils.handleName(column);
+        setters.add(column + " = " + sign + "(" + column + ")");
         return this;
     }
 
     public DuplicateKeyUpdateSqlBuilder addUpdateSetter(String setter) {
         setters.add(setter);
+        return this;
+    }
+
+    public <P>DuplicateKeyUpdateSqlBuilder addUpdateColumn(LMDFunction<P, ?> lambdaFunction) {
+        String column = SqlNameUtils.handleName(LambdaUtils.getColumnName(lambdaFunction));
+        setters.add(column + " = " + sign + "(" + column + ")");
         return this;
     }
 
