@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -69,17 +70,53 @@ public class ConversionHelper {
         return mapToBeanOne(mapList, oneClass, LambdaUtils.getFieldName(anotherOneField), toAnotherOneFun);
     }
 
+    /**
+     * Batch maps to "one to one" JavaBeans
+     */
+    public static <ONE, ANOTHER_ONE>List<ONE> mapToBeanOne(List<Map<String, Object>> mapList, Class<ONE> oneClass, String anotherOneFieldName, Function<Map<String, Object>, ANOTHER_ONE> toAnotherOneFun, Predicate<ANOTHER_ONE> anotherOnePredicate) {
+        return mapToBeanOne(mapList, map -> mapToBean(map, oneClass), anotherOneFieldName, toAnotherOneFun, anotherOnePredicate);
+    }
+
+    /**
+     * Batch maps to "one to one" JavaBeans
+     */
+    public static <ONE, ANOTHER_ONE>List<ONE> mapToBeanOne(List<Map<String, Object>> mapList, Class<ONE> oneClass, LMDFunction<ONE, ?> anotherOneField, Function<Map<String, Object>, ANOTHER_ONE> toAnotherOneFun, Predicate<ANOTHER_ONE> anotherOnePredicate) {
+        return mapToBeanOne(mapList, oneClass, LambdaUtils.getFieldName(anotherOneField), toAnotherOneFun, anotherOnePredicate);
+    }
+
+
+    /**
+     * Batch maps to "one to one" JavaBeans
+     */
     public static <ONE, ANOTHER_ONE>List<ONE> mapToBeanOne(List<Map<String, Object>> mapList, Function<Map<String, Object>, ONE> toOneFun, String anotherOneFieldName, Function<Map<String, Object>, ANOTHER_ONE> toAnotherOneFun) {
+        return mapToBeanOne(mapList, toOneFun, anotherOneFieldName, toAnotherOneFun, e -> true);
+    }
+
+    /**
+     * Batch maps to "one to one" JavaBeans
+     */
+    public static <ONE, ANOTHER_ONE>List<ONE> mapToBeanOne(List<Map<String, Object>> mapList, Function<Map<String, Object>, ONE> toOneFun, String anotherOneFieldName, Function<Map<String, Object>, ANOTHER_ONE> toAnotherOneFun, Predicate<ANOTHER_ONE> anotherOnePredicate) {
         if (mapList == null || mapList.isEmpty()) return Collections.emptyList();
         Class<ONE> oneClass = (Class<ONE>) toOneFun.apply(mapList.get(0)).getClass();
         List<Alias> columnFields = ObjectMapperUtils.getColumnFields(oneClass);
         return getGroupStream(mapList, columnFields, toAnotherOneFun).map(e -> {
             ONE oneBean = toOneFun.apply(e.get(0)._1);
-            handleAnotherOne(oneBean, anotherOneFieldName, e.stream().map(t -> t._2));
+            handleAnotherOne(oneBean, anotherOneFieldName, e.stream().map(t -> t._2).filter(anotherOnePredicate));
             return oneBean;
         }).collect(Collectors.toList());
     }
 
+    /**
+     * Batch maps to "one to one" JavaBeans
+     */
+    public static <ONE, ANOTHER_ONE>List<ONE> mapToBeanOne(List<Map<String, Object>> mapList, Function<Map<String, Object>, ONE> toOneFun, LMDFunction<ONE, ?> anotherOneField, Function<Map<String, Object>, ANOTHER_ONE> toAnotherOneFun, Predicate<ANOTHER_ONE> anotherOnePredicate) {
+        return mapToBeanOne(mapList, toOneFun, LambdaUtils.getFieldName(anotherOneField), toAnotherOneFun, anotherOnePredicate);
+    }
+
+
+    /**
+     * Batch maps to "one to one" JavaBeans
+     */
     public static <ONE, ANOTHER_ONE>List<ONE> mapToBeanOne(List<Map<String, Object>> mapList, Function<Map<String, Object>, ONE> toOneFun, LMDFunction<ONE, ?> anotherOneField, Function<Map<String, Object>, ANOTHER_ONE> toAnotherOneFun) {
         return mapToBeanOne(mapList, toOneFun, LambdaUtils.getFieldName(anotherOneField), toAnotherOneFun);
     }
@@ -101,7 +138,36 @@ public class ConversionHelper {
     /**
      * Batch maps to "one to many" JavaBeans
      */
+    public static <ONE, MANY> List<ONE> mapToBeanMany(List<Map<String, Object>> mapList, Class<ONE> oneClass, String manyFieldName, Function<Map<String, Object>, MANY> toManyFun, Predicate<MANY> manyPredicate) {
+        return mapToBeanMany(mapList, map -> mapToBean(map, oneClass), manyFieldName, toManyFun, manyPredicate);
+    }
+
+    /**
+     * Batch maps to "one to many" JavaBeans
+     */
+    public static <ONE, MANY> List<ONE> mapToBeanMany(List<Map<String, Object>> mapList, Class<ONE> oneClass, LMDFunction<ONE, ?> manyField, Function<Map<String, Object>, MANY> toManyFun, Predicate<MANY> manyPredicate) {
+        return mapToBeanMany(mapList, oneClass, LambdaUtils.getFieldName(manyField), toManyFun, manyPredicate);
+    }
+
+
+    /**
+     * Batch maps to "one to many" JavaBeans
+     */
     public static <ONE, MANY> List<ONE> mapToBeanMany(List<Map<String, Object>> mapList, Function<Map<String, Object>, ONE> toOneFun, String manyFieldName, Function<Map<String, Object>, MANY> toManyFun) {
+        return mapToBeanMany(mapList, toOneFun, manyFieldName, toManyFun, e -> true);
+    }
+
+    /**
+     * Batch maps to "one to many" JavaBeans
+     */
+    public static <ONE, MANY> List<ONE> mapToBeanMany(List<Map<String, Object>> mapList, Function<Map<String, Object>, ONE> toOneFun, LMDFunction<ONE, ?> manyField, Function<Map<String, Object>, MANY> toManyFun, Predicate<MANY> manyPredicate) {
+        return mapToBeanMany(mapList, toOneFun, LambdaUtils.getFieldName(manyField), toManyFun, manyPredicate);
+    }
+
+    /**
+     * Batch maps to "one to many" JavaBeans
+     */
+    public static <ONE, MANY> List<ONE> mapToBeanMany(List<Map<String, Object>> mapList, Function<Map<String, Object>, ONE> toOneFun, String manyFieldName, Function<Map<String, Object>, MANY> toManyFun, Predicate<MANY> manyPredicate) {
         if (mapList == null || mapList.isEmpty()) return Collections.emptyList();
         Class<ONE> oneClass = (Class<ONE>) toOneFun.apply(mapList.get(0)).getClass();
         Field field = ObjectMapperUtils.getField(oneClass, manyFieldName);
@@ -115,7 +181,7 @@ public class ConversionHelper {
         List<Alias> columnFields = ObjectMapperUtils.getColumnFields(oneClass);
         return getGroupStream(mapList, columnFields, toManyFun).map(e -> {
             ONE oneBean = toOneFun.apply(e.get(0)._1);
-            handleMany(oneBean, manyFieldName, declaringClass, e.stream().map(t -> t._2));
+            handleMany(oneBean, manyFieldName, declaringClass, e.stream().map(t -> t._2).filter(manyPredicate));
             return oneBean;
         }).collect(Collectors.toList());
     }
