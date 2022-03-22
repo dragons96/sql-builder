@@ -265,6 +265,7 @@ public class Item {
 
     private String goodsName;
 }
+
 ```
 2. 编写dao层接口
 
@@ -296,12 +297,10 @@ public class TestController {
     private ItemMapper mapper;
 
     @GetMapping("/xxx")
-    public Object items() {
+    public List<Item> items() {
         return mapper.selectList(new SimpleSqlBuilderQueryWrapper<Item>(
             MybatisQuerySqlBuilder.I
-                .where("goods_id", Operator.IN, 1, 2, 3, 4)
-                .groupBy("category")
-                .having("count(1)", Operator.GE, 10)
+                .where(Item::getGoodsId, Operator.IN, 1, 2, 3, 4)
                 .orderByAsc("goods_id")
                 .limit(0, 10)
         ));
@@ -309,6 +308,82 @@ public class TestController {
 }
 ```
 
+4.(拓展) mp 支持联表查询示例
+
+```java
+import club.kingon.sql.builder.config.GlobalConfig;
+import club.kingon.sql.builder.entry.Alias;
+import club.kingon.sql.builder.entry.Column;
+import club.kingon.sql.builder.spring.mybatisplus.query.MybatisQuerySqlBuilder;
+import club.kingon.sql.builder.spring.mybatisplus.util.ConversionHelper;
+import club.kingon.sql.builder.spring.mybatisplus.wrapper.SimpleSqlBuilderQueryWrapper;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Map;
+
+// 实体
+@Data
+@TableName("user")
+class User {
+    private Integer id;
+
+    private String name;
+
+    @TableField(exist = false)
+    private List<Address> addressList;
+}
+
+@Data
+@TableName("address")
+class Address {
+    private Integer id;
+
+    private Integer userId;
+
+    private String place;
+}
+
+// mapper
+public interface UserMapper extends BaseMapper<User> {
+
+}
+
+@RestController
+public class TestController {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    static {
+        // 提前开启lambda表达式表名模式
+        GlobalConfig.OPEN_LAMBDA_TABLE_NAME_MODE = true;
+    }
+
+    /* 查询用户及用户下的所有地址 */
+    public List<User> getUserAndOrders(Integer id) {
+        // select user.id, user.name, address.id as address_id, place from user left join address on user.id = address.user_id where user.id >= #{id}
+        List<Map<String, Object>> maps = userMapper.selectMaps(new SimpleSqlBuilderQueryWrapper<User>(
+            MybatisQuerySqlBuilder.I
+                .leftJoin(Address.class)
+                .onEq(User::getId, Column.as(Address::getUserId))
+                .whereGe(id != null, User::getId, id)
+        ).select(User.class).select(Alias(Address::getId, "address_id")).select(Address::getPlace));
+        // 使用转换工具转换为聚合对象
+        // 由于user表字段未存在别名，可直接使用User.class装载, 若User存在字段别名, 则应使用Function装载
+        List<User> users = ConversionHelper.mapToBeanMany(maps, User.class, User::getAddressList, map -> {
+            Address a = new Address();
+            a.setId((Integer)map.get("address_id"));
+            a.setPlace((String)map.get("place"));
+            return a;
+        });
+        return users;
+    }
+}
+```
 
 ### 集成 Spring JdbcTemplate(Mybatis 也可使用 JdbcTemplate 处理), 以商品查询为例 (仅简单使用示例， 具体业务实现可自行封装集成)
 
@@ -391,6 +466,8 @@ public class GoodsService {
     }
 }
 ```
+
+##### 2022-03-22 新增mybatis-plus联表maps转换javabean辅助工具ConversionHelper类
 
 ##### 2022-03-11 支持sql严格模式及Lambda字段组合表名查询(联表场景)
 
