@@ -4,6 +4,9 @@ import club.kingon.sql.builder.LMDFunction;
 import club.kingon.sql.builder.SelectSqlBuilder;
 import club.kingon.sql.builder.SqlBuilder;
 import club.kingon.sql.builder.entry.Alias;
+import club.kingon.sql.builder.entry.Constants;
+import club.kingon.sql.builder.inner.ObjectMapperUtils;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.Query;
 import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
@@ -11,6 +14,7 @@ import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -102,21 +106,31 @@ public class SimpleSqlBuilderQueryWrapper<T> extends Wrapper<T>
         return paramNameValuePairs;
     }
 
-    @Override
-    public SimpleSqlBuilderQueryWrapper<T> select(Object... columnOrAliasOrClass) {
+    private void handleSelectSqlBuilder(Object... columnOrAliasOrClass) {
         if (selectSqlBuilder == null) {
-            selectSqlBuilder = SqlBuilder.select(columnOrAliasOrClass);
-        } else {
-            for (Object e : columnOrAliasOrClass) {
-                if (e instanceof String) {
-                    selectSqlBuilder.addColumn((String) e);
-                } else if (e instanceof Alias) {
-                    selectSqlBuilder.addColumn((Alias) e);
-                } else if (e instanceof LMDFunction) {
-                    selectSqlBuilder.addColumn((LMDFunction<?, ?>) e);
-                }
+            selectSqlBuilder = SqlBuilder.select(Constants.EMPTY_OBJECT_ARRAY);
+        }
+        for (Object e : columnOrAliasOrClass) {
+            if (e instanceof String) {
+                selectSqlBuilder.addColumn((String) e);
+            } else if (e instanceof Alias) {
+                selectSqlBuilder.addColumn((Alias) e);
+            } else if (e instanceof LMDFunction) {
+                selectSqlBuilder.addColumn((LMDFunction<?, ?>) e);
+            } else if (e instanceof Class) {
+                Class<?> eClass = (Class<?>) e;
+                List<Alias> columnFields = ObjectMapperUtils.getColumnFields(eClass);
+                selectSqlBuilder.addColumn(columnFields.stream().filter(columnField -> {
+                    TableField tableField = ObjectMapperUtils.getAnnotation(eClass, columnField.getAlias(), TableField.class);
+                    return tableField == null || tableField.exist();
+                }).map(Alias::getOrigin).toArray(String[]::new));
             }
         }
+    }
+
+    @Override
+    public SimpleSqlBuilderQueryWrapper<T> select(Object... columnOrAliasOrClass) {
+        handleSelectSqlBuilder(columnOrAliasOrClass);
         return this;
     }
 
