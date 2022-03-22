@@ -3,6 +3,7 @@ package club.kingon.sql.builder.spring.mybatisplus.wrapper;
 import club.kingon.sql.builder.LMDFunction;
 import club.kingon.sql.builder.SelectSqlBuilder;
 import club.kingon.sql.builder.SqlBuilder;
+import club.kingon.sql.builder.config.GlobalConfig;
 import club.kingon.sql.builder.entry.Alias;
 import club.kingon.sql.builder.entry.Constants;
 import club.kingon.sql.builder.inner.ObjectMapperUtils;
@@ -120,10 +121,11 @@ public class SimpleSqlBuilderQueryWrapper<T> extends Wrapper<T>
             } else if (e instanceof Class) {
                 Class<?> eClass = (Class<?>) e;
                 List<Alias> columnFields = ObjectMapperUtils.getColumnFields(eClass);
+                String tableName = ObjectMapperUtils.getTableName(eClass);
                 selectSqlBuilder.addColumn(columnFields.stream().filter(columnField -> {
                     TableField tableField = ObjectMapperUtils.getAnnotation(eClass, columnField.getAlias(), TableField.class);
                     return tableField == null || tableField.exist();
-                }).map(Alias::getOrigin).toArray(String[]::new));
+                }).map(c -> GlobalConfig.OPEN_LAMBDA_TABLE_NAME_MODE ? tableName + "." + c : c).toArray(String[]::new));
             }
         }
     }
