@@ -16,7 +16,27 @@ public class LambdaUtils {
 
     private final static Logger log = LoggerFactory.getLogger(LambdaUtils.class);
 
+    public static <T extends LMDFunction>String getFieldName(T lambda) {
+        return getClassAndFieldName(lambda)._2;
+    }
+
     public static <T extends LMDFunction>String getColumnName(T lambda) {
+        Tuple2<String, String> classAndField = getClassAndFieldName(lambda);
+        try {
+            // support @Column name.
+            Class<?> lambdaClass = Class.forName(classAndField._1);
+            // use table.column
+            if (GlobalConfig.OPEN_LAMBDA_TABLE_NAME_MODE) {
+                return  ObjectMapperUtils.getTableName(lambdaClass) + "." + ObjectMapperUtils.getColumnName(lambdaClass, classAndField._2);
+            }
+            return ObjectMapperUtils.getColumnName(lambdaClass, classAndField._2);
+        } catch (ClassNotFoundException e) {
+            log.warn("lambda class: {} cannot be loaded, ignore", classAndField._1, e);
+        }
+        return ObjectMapperUtils.humpNameToUnderlinedName(classAndField._2, "_");
+    }
+
+    private static <T extends LMDFunction>Tuple2<String, String> getClassAndFieldName(T lambda) {
         Tuple2<String, String> classAndMethod = ObjectMapperUtils.getLambdaImplementClassAndMethodName(lambda);
         String fieldName;
         if (classAndMethod._2.startsWith("is")) {
@@ -29,18 +49,6 @@ public class LambdaUtils {
         if (fieldName.length() == 1 || (fieldName.length() > 1 && !Character.isUpperCase(fieldName.charAt(1)))) {
             fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
         }
-
-        try {
-            // support @Column name.
-            Class<?> lambdaClass = Class.forName(classAndMethod._1);
-            // use table.column
-            if (GlobalConfig.OPEN_LAMBDA_TABLE_NAME_MODE) {
-                return  ObjectMapperUtils.getTableName(lambdaClass) + "." + ObjectMapperUtils.getColumnName(lambdaClass, fieldName);
-            }
-            return ObjectMapperUtils.getColumnName(lambdaClass, fieldName);
-        } catch (ClassNotFoundException e) {
-            log.warn("lambda class: {} cannot be loaded, ignore", classAndMethod._1, e);
-        }
-        return ObjectMapperUtils.humpNameToUnderlinedName(fieldName, "_");
+        return Tuple2.of(classAndMethod._1, fieldName);
     }
 }
