@@ -15,12 +15,15 @@ public class UnionSqlBuilder implements SqlBuilder, OrderSqlBuilderRoute, LimitS
 
     private final String prefix;
 
+    protected String sep;
+
     private final List<SqlBuilder> unions;
 
     private final List<Object> precompileArgs = new ArrayList<>();
 
     protected UnionSqlBuilder(String prefix, Object[] precompileArgs, SqlBuilder...unions) {
         this.prefix = prefix;
+        this.sep = "UNION";
         this.unions = new ArrayList<>(Arrays.asList(unions));
         this.precompileArgs.addAll(Arrays.asList(precompileArgs));
         for (SqlBuilder union : unions) {
@@ -40,9 +43,9 @@ public class UnionSqlBuilder implements SqlBuilder, OrderSqlBuilderRoute, LimitS
     public String precompileSql() {
         boolean prefixEmpty = prefix == null || "".equals(prefix), unionsEmpty = unions.isEmpty();
         if (prefixEmpty && unionsEmpty) return "";
-        if (prefixEmpty) return unions.stream().map(PreparedStatementSupport::precompileSql).collect(Collectors.joining(" UNION "));
+        if (prefixEmpty) return unions.stream().map(PreparedStatementSupport::precompileSql).collect(Collectors.joining(" " + sep + " "));
         if (unionsEmpty) return prefix;
-        return prefix + " UNION " + unions.stream().map(PreparedStatementSupport::precompileSql).collect(Collectors.joining(" UNION "));
+        return prefix + " " + sep + " " + unions.stream().map(PreparedStatementSupport::precompileSql).collect(Collectors.joining(" " + sep + " "));
     }
 
     @Override

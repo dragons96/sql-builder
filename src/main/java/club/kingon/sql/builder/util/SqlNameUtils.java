@@ -13,8 +13,12 @@ import java.util.stream.Collectors;
 public class SqlNameUtils {
 
     public static String handleName(Alias alias) {
-        if (GlobalConfig.OPEN_STRICT_MODE && alias != null) {
-            return handleName(alias.toString());
+        if (alias != null) {
+            if (GlobalConfig.OPEN_STRICT_MODE) {
+                return handleName(alias.toString());
+            } else {
+                return alias.toString();
+            }
         }
         return "";
     }
@@ -32,8 +36,8 @@ public class SqlNameUtils {
                 return Arrays.stream(name.split(",")).map(String::trim).map(SqlNameUtils::handleName).collect(Collectors.joining(", "));
             } else if (name.contains("as")) {
                 String[] columnAndAlias = name.split("as");
-                return "`" + columnAndAlias[0].trim() + "` as `" + columnAndAlias[1].trim() + "`";
-            } else if (name.startsWith("`")) {
+                return handleName(columnAndAlias[0].trim()) + " as " + handleName(columnAndAlias[1].trim());
+            } else if (name.startsWith("`") || name.contains("->")) {
                 return name;
             }
             return "`" + name + "`";

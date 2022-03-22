@@ -124,6 +124,16 @@ public class ObjectMapperUtils {
         return classMeta.getField(fieldName);
     }
 
+    public static <T>void setFieldValue(T obj, String fieldName, Object value) throws IllegalAccessException {
+        Field field = getField(obj.getClass(), fieldName);
+        if (field != null) {
+            if (!field.isAccessible()) {
+                field.setAccessible(true);
+            }
+            field.set(obj, value);
+        }
+    }
+
     public static <T, V> V getFieldValue(T obj, String fieldName) throws IllegalAccessException, InvocationTargetException {
         ClassMetadata classMeta = getClassMeta(obj.getClass(), Collections.emptyList(), Collections.emptyList());
         if (classMeta == null) return null;

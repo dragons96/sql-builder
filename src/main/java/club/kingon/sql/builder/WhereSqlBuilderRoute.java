@@ -809,22 +809,22 @@ public interface WhereSqlBuilderRoute extends SqlBuilder {
 
 
 
-    default WhereSqlBuilder whereIsNull(String column) {
+    default WhereSqlBuilder whereNull(String column) {
         return where(Boolean.TRUE, column, Operator.IS_NULL);
     }
 
-    default <P>WhereSqlBuilder whereIsNull(LMDFunction<P, ?> lambdaFunction) {
-        return whereIsNull(LambdaUtils.getColumnName(lambdaFunction));
+    default <P>WhereSqlBuilder whereNull(LMDFunction<P, ?> lambdaFunction) {
+        return whereNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    default <P>WhereSqlBuilder whereIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
+    default <P>WhereSqlBuilder whereNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
-            return whereIsNull(LambdaUtils.getColumnName(lambdaFunction));
+            return whereNull(LambdaUtils.getColumnName(lambdaFunction));
         }
         return new WhereSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default WhereSqlBuilder whereIsNull(Boolean predicate, String column) {
+    default WhereSqlBuilder whereNull(Boolean predicate, String column) {
         if (Boolean.TRUE.equals(predicate)) {
             return where(Boolean.TRUE, column, Operator.IS_NULL);
         }

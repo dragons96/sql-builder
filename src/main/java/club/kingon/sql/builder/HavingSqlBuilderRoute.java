@@ -810,22 +810,22 @@ public interface HavingSqlBuilderRoute extends SqlBuilder {
 
 
 
-    default HavingSqlBuilder havingIsNull(String column) {
+    default HavingSqlBuilder havingNull(String column) {
         return having(Boolean.TRUE, column, Operator.IS_NULL);
     }
 
-    default <P>HavingSqlBuilder havingIsNull(LMDFunction<P, ?> lambdaFunction) {
-        return havingIsNull(LambdaUtils.getColumnName(lambdaFunction));
+    default <P>HavingSqlBuilder havingNull(LMDFunction<P, ?> lambdaFunction) {
+        return havingNull(LambdaUtils.getColumnName(lambdaFunction));
     }
 
-    default <P>HavingSqlBuilder havingIsNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
+    default <P>HavingSqlBuilder havingNull(Boolean predicate, LMDFunction<P, ?> lambdaFunction) {
         if (Boolean.TRUE.equals(predicate)) {
-            return havingIsNull(LambdaUtils.getColumnName(lambdaFunction));
+            return havingNull(LambdaUtils.getColumnName(lambdaFunction));
         }
         return new HavingSqlBuilder(Boolean.FALSE, precompileSql(), precompileArgs());
     }
 
-    default HavingSqlBuilder havingIsNull(Boolean predicate, String column) {
+    default HavingSqlBuilder havingNull(Boolean predicate, String column) {
         if (Boolean.TRUE.equals(predicate)) {
             return having(Boolean.TRUE, column, Operator.IS_NULL);
         }
