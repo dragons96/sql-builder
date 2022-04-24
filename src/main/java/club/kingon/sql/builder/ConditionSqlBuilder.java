@@ -248,7 +248,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T) this;
     }
 
-    public T and(Boolean predicate, Supplier<T> wrapper) {
+    public T and(Boolean predicate, Supplier<T[]> wrapper) {
         if (Boolean.TRUE.equals(predicate)) {
             return and(wrapper.get());
         }
@@ -386,7 +386,7 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T) this;
     }
 
-    public T or(Boolean predicate, Supplier<T> wrapper) {
+    public T or(Boolean predicate, Supplier<T[]> wrapper) {
         if (Boolean.TRUE.equals(predicate)) {
             return or(wrapper.get());
         }
