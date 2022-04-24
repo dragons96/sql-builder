@@ -171,9 +171,13 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return and(pt._1, pt._2);
     }
 
-    public T and(T wrapper) {
-        if (wrapper != null) {
-            return (T) and("(" + wrapper.conditionBuilder.toString() + ")", wrapper.precompileArgs);
+    public T and(T ...wrappers) {
+        if (wrappers.length > 0) {
+            for (T wrapper : wrappers) {
+                if (wrapper != null) {
+                    and("(" + wrapper.conditionBuilder.toString() + ")", wrapper.precompileArgs);
+                }
+            }
         }
         return (T) this;
     }
@@ -237,9 +241,9 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T) this;
     }
 
-    public T and(Boolean predicate, T wrapper) {
+    public T and(Boolean predicate, T... wrappers) {
         if (Boolean.TRUE.equals(predicate)) {
-            return and(wrapper);
+            return and(wrappers);
         }
         return (T) this;
     }
@@ -305,9 +309,13 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return or(LambdaUtils.getColumnName(lambdaFunction), option, values);
     }
 
-    public T or(T wrapper) {
-        if (wrapper != null) {
-            return (T) or("(" + wrapper.conditionBuilder.toString() + ")", wrapper.precompileArgs);
+    public T or(T... wrappers) {
+        if (wrappers.length > 0) {
+            for (T wrapper : wrappers) {
+                if (wrapper != null) {
+                    or("(" + wrapper.conditionBuilder.toString() + ")", wrapper.precompileArgs);
+                }
+            }
         }
         return (T) this;
     }
@@ -371,9 +379,9 @@ public class ConditionSqlBuilder<T extends ConditionSqlBuilder> implements SqlBu
         return (T) this;
     }
 
-    public T or(Boolean predicate, T wrapper) {
+    public T or(Boolean predicate, T... wrappers) {
         if (Boolean.TRUE.equals(predicate)) {
-            return or(wrapper);
+            return or(wrappers);
         }
         return (T) this;
     }
