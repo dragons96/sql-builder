@@ -32,6 +32,9 @@ public class ConditionUtils {
         if (option == Operator.IN || option == Operator.NOT_IN) {
             List<Object> vs = Arrays.stream(value).filter(Objects::nonNull)
                 .flatMap(ConditionUtils::handleMoreFlatMap).collect(Collectors.toList());
+            if (vs.isEmpty()) {
+                return Tuple2.of("", Constants.EMPTY_OBJECT_ARRAY);
+            }
             StringBuilder precompileTemplateBuilder = new StringBuilder(column + " " + option.getOptions().get(0));
             Object[] precompileArgs = null;
             for (int i = 0; i < vs.size(); i++) {
