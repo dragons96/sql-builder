@@ -467,6 +467,23 @@ public class GoodsService {
 }
 ```
 
+##### 2022-11-18 新增in, not in语法自动抹除空列表
+
+```java
+
+import club.kingon.sql.builder.SqlBuilder;
+
+import java.util.Arrays;
+
+class Example {
+    public static void main(String[] args) {
+        // 修改前: select * from table_a where a in () and b = 1
+        // 修改后: select * from table_a where b = 1
+        SqlBuilder.selectAll().from("table_a").whereIn("a", Arrays.asList()).andEq("b", 1);
+    }
+}
+```
+
 ##### 2022-03-22 新增mybatis-plus联表maps转换javabean辅助工具ConversionHelper类
 
 ##### 2022-03-11 支持sql严格模式及Lambda字段组合表名查询(联表场景)
