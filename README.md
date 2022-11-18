@@ -16,7 +16,7 @@
 <dependency>
     <groupId>io.github.dragons96</groupId>
     <artifactId>sql-builder</artifactId>
-    <version>0.0.5.2</version>
+    <version>0.0.5.3</version>
 </dependency>
 ```
 
